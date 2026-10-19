@@ -8,7 +8,7 @@
 
 No backend. No cloud account. No telemetry. The whole workspace lives in your browser and never leaves the device.
 
-[**Download for Windows**](https://github.com/theusercontent/cadence/raw/refs/heads/release/v1.1.0/releases/Cadence-Offline-v1.1.0-Windows.zip) ·
+[**Download for Windows**](https://github.com/theusercontent/cadence/releases/download/v1.1.0/Cadence-Offline-v1.1.0-Windows.zip) ·
 [Run locally](#quick-start) ·
 [Take the tour](#a-quick-tour)
 
@@ -53,7 +53,7 @@ Every task can carry a small checklist. Cadence turns that checklist into readab
 
 The release ZIP is self-contained: it bundles a portable Node.js runtime, the prebuilt app, `run.bat`, and a license. There is no installer, no account, no administrator access, and no internet connection required.
 
-1. [Download `Cadence-Offline-v1.1.0-Windows.zip`](https://github.com/theusercontent/cadence/raw/refs/heads/release/v1.1.0/releases/Cadence-Offline-v1.1.0-Windows.zip) (30.5 MB).
+1. [Download `Cadence-Offline-v1.1.0-Windows.zip`](https://github.com/theusercontent/cadence/releases/download/v1.1.0/Cadence-Offline-v1.1.0-Windows.zip) (30.5 MB).
 2. Extract the folder anywhere.
 3. Double-click `run.bat` and open the local URL it prints.
 
@@ -61,7 +61,7 @@ The release ZIP is self-contained: it bundles a portable Node.js runtime, the pr
 SHA-256  77872907b43a2281bf793a71add362b6e6a1f4be097b50cf533b0a345f7d0d59
 ```
 
-Checksums are also published in [`releases/SHA256SUMS.txt`](https://github.com/theusercontent/cadence/raw/refs/heads/release/v1.1.0/releases/SHA256SUMS.txt). Versioned ZIPs live on `release/*` branches so `main` stays source-only; release branches are never merged.
+The checksum is also attached to the [v1.1.0 release](https://github.com/theusercontent/cadence/releases/tag/v1.1.0) and archived on the [`release/v1.1.0` branch](https://github.com/theusercontent/cadence/tree/release/v1.1.0/releases). Versioned ZIPs live on `release/*` branches so `main` stays source-only; release branches are never merged.
 
 ## Demo accounts
 
