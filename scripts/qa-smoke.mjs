@@ -60,7 +60,7 @@ async function clickText(selector, text) {
   )
   const element = handle.asElement()
   if (!element) throw new Error(`Could not find ${selector} containing “${text}”`)
-  await element.evaluate((node) => node.scrollIntoView({ block: 'center' }))
+  await element.evaluate((node) => node.scrollIntoView({ block: 'center', behavior: 'instant' }))
   await element.click()
 }
 
@@ -272,6 +272,20 @@ async function main() {
     await page.type('[aria-label="Add a step"]', 'Verify local persistence')
     await page.keyboard.press('Enter')
     await waitForText('.subtask-list', 'Verify local persistence')
+    const newStepProgress = await page.$eval('.subtask-progress', (node) => ({
+      label: node.getAttribute('aria-label'),
+      now: node.getAttribute('aria-valuenow'),
+    }))
+    assert(
+      newStepProgress.label === '0 of 1 steps complete' && newStepProgress.now === '0',
+      'A new step did not render a 0% progress bar',
+    )
+    await page.click('.subtask:not(.is-done) .check-toggle')
+    await page.waitForFunction(
+      () => document.querySelector('.subtask-progress')?.getAttribute('aria-valuenow') === '100',
+      { timeout: 10000 },
+    )
+    note('Step progress bar tracked 0 → 100% while completing the step')
     await page.type('[aria-label="Write a comment"]', 'Created during the smoke test.')
     await clickText('.comment-composer .button-primary', 'Comment')
     await waitForText('.comment-list', 'Created during the smoke test.')
@@ -285,6 +299,15 @@ async function main() {
     await nav('Tasks')
     await page.type('[aria-label="Search tasks"]', QA_TASK)
     await page.waitForSelector(`.task-row[aria-label^="${QA_TASK}"]`, { timeout: 10000 })
+    const rowProgress = await page.$eval(
+      `.task-row[aria-label^="${QA_TASK}"] [role="progressbar"]`,
+      (node) => ({ label: node.getAttribute('aria-label'), now: node.getAttribute('aria-valuenow') }),
+    )
+    assert(
+      rowProgress.label === '1 of 1 steps complete' && rowProgress.now === '100',
+      'Task row progress did not reflect the completed step',
+    )
+    note('Task row progress matched the completed step')
     await page.click(`.task-row[aria-label^="${QA_TASK}"]`)
     await page.waitForSelector('.task-detail')
     await fillField('Status', 'done')
@@ -382,6 +405,8 @@ async function main() {
   await runStep('Board drag and drop', async () => {
     await nav('Board')
     await page.waitForSelector('.kanban-column')
+    assert(await page.$('.kanban-progress [role="progressbar"]'), 'Board cards are missing step progress')
+    note('Board cards expose step progress bars')
     const result = await dragCardToColumn('Draft launch email', 'In progress')
     assert(result.ok, `Drag failed: ${result.reason}`)
     await page.waitForFunction(
@@ -418,7 +443,33 @@ async function main() {
     await clickText('.calendar-toolbar .button-quiet', 'Today')
     const monthAfter = await textOf('.calendar-month-nav h2')
     assert(monthAfter === monthBefore, 'Today did not return to the current month')
+    await clickText('.calendar-toolbar .segmented button', 'All work')
+    await page.waitForSelector('.day-task-progress [role="progressbar"]', { timeout: 10000 })
+    note('Calendar day panel shows step progress')
     note('Calendar renders, advances months, and returns to today')
+  })
+
+  await runStep('Mobile step progress', async () => {
+    await nav('Tasks')
+    await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2 })
+    await page.reload({ waitUntil: 'networkidle0' })
+    await page.waitForSelector('.sidebar', { timeout: 30000 })
+    await waitHeading('Tasks')
+    if (!(await page.$('.task-row-steps'))) {
+      const scopeButton = await page.$('[aria-label="Task scope"] button:last-child')
+      if (scopeButton) await scopeButton.click()
+    }
+    await page.waitForSelector('.task-row-steps', { timeout: 10000 })
+    const mobileProgress = await page.evaluate(() => ({
+      strips: document.querySelectorAll('.task-row-steps').length,
+      overflowX: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+    }))
+    assert(mobileProgress.strips > 0, 'Mobile task rows are missing step progress')
+    assert(!mobileProgress.overflowX, 'Step progress overflowed the mobile viewport')
+    note('Task rows and step progress fit a 390 px viewport')
+    await page.setViewport({ width: 1440, height: 960, deviceScaleFactor: 1 })
+    await page.reload({ waitUntil: 'networkidle0' })
+    await page.waitForSelector('.sidebar', { timeout: 30000 })
   })
 
   await runStep('Create a project', async () => {

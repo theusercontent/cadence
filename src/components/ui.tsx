@@ -91,9 +91,26 @@ export function ProjectGlyph({ project, size = 'md' }: { project: Project; size?
   )
 }
 
-export function ProgressBar({ value, tone, className }: { value: number; tone?: string; className?: string }) {
+export function ProgressBar({
+  value,
+  tone,
+  className,
+  label,
+}: {
+  value: number
+  tone?: string
+  className?: string
+  label?: string
+}) {
   return (
-    <span className={cx('progress-track', className)} aria-label={`${value}% complete`} role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100}>
+    <span
+      className={cx('progress-track', className)}
+      aria-label={label ?? `${value}% complete`}
+      role="progressbar"
+      aria-valuenow={value}
+      aria-valuemin={0}
+      aria-valuemax={100}
+    >
       <span className="progress-fill" style={{ width: `${Math.min(100, Math.max(0, value))}%`, background: tone }} />
     </span>
   )

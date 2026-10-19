@@ -9,7 +9,7 @@ import {
 import { useStore } from '../store/store'
 import { useAppUI } from '../ui/AppUI'
 import { PageHeader } from '../components/TaskRow'
-import { CheckToggle, EmptyState, ProjectGlyph } from '../components/ui'
+import { CheckToggle, EmptyState, ProgressBar, ProjectGlyph } from '../components/ui'
 import { canCreateTask, canEditTask, visibleProjects, visibleTasks } from '../lib/permissions'
 import {
   formatLongDate,
@@ -19,7 +19,7 @@ import {
   toISODate,
   todayISO,
 } from '../lib/dates'
-import { cx, pluralize } from '../lib/utils'
+import { cx, pluralize, stepProgress } from '../lib/utils'
 import type { Project, Task } from '../types'
 
 export function CalendarPage() {
@@ -271,6 +271,7 @@ export function CalendarPage() {
               selectedTasks.map((task) => {
                 const project = projectMap.get(task.projectId)
                 const assignee = task.assigneeId ? userMap.get(task.assigneeId) : null
+                const steps = stepProgress(task.subtasks)
                 return (
                   <article
                     key={task.id}
@@ -298,6 +299,16 @@ export function CalendarPage() {
                         {project?.name}
                         {assignee ? ` · ${assignee.name.split(' ')[0]}` : ''}
                       </small>
+                      {steps.total > 0 && (
+                        <div className="day-task-progress">
+                          <ProgressBar
+                            value={steps.pct}
+                            tone={project?.color}
+                            label={`${steps.done} of ${steps.total} steps complete`}
+                          />
+                          <span aria-hidden="true">{steps.done}/{steps.total}</span>
+                        </div>
+                      )}
                     </div>
                     <ProjectGlyph project={project ?? ({ color: '#888', name: '' } as Project)} size="sm" />
                   </article>

@@ -80,8 +80,31 @@
   transform: translateY(-50%);
 }
 
-.task-meta-count {
+.task-row-steps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding-top: 1px;
+}
+
+.task-row-progress {
+  height: 4px;
+  flex: 1;
+  min-width: 28px;
+}
+
+.task-row-step-count {
+  flex: none;
+  color: var(--text-faint);
+  font-size: 9.5px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.task-row-compact .task-row-progress {
+  height: 3px;
 }
 
 .task-row-side {
@@ -653,12 +676,24 @@
   min-width: 0;
 }
 
-.kanban-step-count {
-  display: inline-flex;
+.kanban-progress {
+  display: flex;
   align-items: center;
-  gap: 3px;
-  font-size: 9.5px;
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.kanban-progress-track {
+  height: 4px;
+  flex: 1;
+}
+
+.kanban-progress-count {
+  flex: none;
   color: var(--text-faint);
+  font-size: 9px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 

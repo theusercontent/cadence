@@ -342,6 +342,27 @@
   white-space: nowrap;
 }
 
+.day-task-progress {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.day-task-progress .progress-track {
+  height: 3px;
+  flex: 1;
+}
+
+.day-task-progress > span:last-child {
+  flex: none;
+  color: var(--text-faint);
+  font-size: 8.5px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 .day-task.is-done .day-task-copy > span {
   text-decoration: line-through;
   color: var(--text-tertiary);

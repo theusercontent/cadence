@@ -3,7 +3,6 @@ import {
   CalendarDays,
   CheckCircle2,
   GripVertical,
-  ListChecks,
   Plus,
   Search,
   X,
@@ -11,7 +10,7 @@ import {
 import { useStore } from '../store/store'
 import { useAppUI } from '../ui/AppUI'
 import { PageHeader } from '../components/TaskRow'
-import { Avatar, EmptyState, ProjectGlyph } from '../components/ui'
+import { Avatar, EmptyState, ProgressBar, ProjectGlyph } from '../components/ui'
 import {
   canCreateTask,
   canEditTask,
@@ -22,7 +21,7 @@ import {
   visibleTasks,
 } from '../lib/permissions'
 import { formatDueDate, isOverdue, todayISO } from '../lib/dates'
-import { cx } from '../lib/utils'
+import { cx, stepProgress } from '../lib/utils'
 import type { Task, TaskStatus } from '../types'
 import { STATUS_LABELS, STATUS_ORDER } from '../types'
 
@@ -186,6 +185,7 @@ export function BoardPage() {
                 const assignee = task.assigneeId ? userMap.get(task.assigneeId) : null
                 const editable = canEditTask(user, task, project)
                 const overdue = isOverdue(task.dueDate, status === 'done')
+                const steps = stepProgress(task.subtasks)
                 return (
                   <article
                     key={task.id}
@@ -229,16 +229,24 @@ export function BoardPage() {
                         ))}
                       </div>
                     )}
+                    {steps.total > 0 && (
+                      <div className="kanban-progress">
+                        <ProgressBar
+                          value={steps.pct}
+                          tone={project?.color}
+                          className="kanban-progress-track"
+                          label={`${steps.done} of ${steps.total} steps complete`}
+                        />
+                        <span className="kanban-progress-count" aria-hidden="true">
+                          {steps.done}/{steps.total} steps
+                        </span>
+                      </div>
+                    )}
                     <div className="kanban-card-foot">
                       <div className="kanban-meta">
                         {task.dueDate && (
                           <span className={cx('due-chip due-chip-small', overdue && 'due-overdue')}>
                             <CalendarDays size={12} /> {formatDueDate(task.dueDate, status === 'done')}
-                          </span>
-                        )}
-                        {task.subtasks.length > 0 && (
-                          <span className="kanban-step-count">
-                            <ListChecks size={12} /> {task.subtasks.filter((subtask) => subtask.done).length}/{task.subtasks.length}
                           </span>
                         )}
                       </div>

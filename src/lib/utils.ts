@@ -1,3 +1,11 @@
+import type { Subtask } from '../types'
+
+export interface StepProgress {
+  done: number
+  total: number
+  pct: number
+}
+
 export const uid = (prefix = ''): string => {
   const random = typeof crypto !== 'undefined' && crypto.randomUUID
     ? crypto.randomUUID()
@@ -55,6 +63,12 @@ export function kebabToTitle(value: string): string {
 export function pct(value: number, total: number): number {
   if (!total) return 0
   return Math.round((value / total) * 100)
+}
+
+export function stepProgress(subtasks: Subtask[]): StepProgress {
+  const total = subtasks.length
+  const done = subtasks.filter((subtask) => subtask.done).length
+  return { done, total, pct: pct(done, total) }
 }
 
 export function pluralize(count: number, singular: string, plural?: string): string {

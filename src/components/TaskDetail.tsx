@@ -346,7 +346,14 @@ export function TaskDetail() {
                 <span className="detail-section-meta">{doneSubtasks}/{task.subtasks.length}</span>
               )}
             </div>
-            {task.subtasks.length > 0 && <ProgressBar value={subtaskPct} className="subtask-progress" />}
+            {task.subtasks.length > 0 && (
+              <ProgressBar
+                value={subtaskPct}
+                tone={project.color}
+                className="subtask-progress"
+                label={`${doneSubtasks} of ${task.subtasks.length} steps complete`}
+              />
+            )}
             <div className="subtask-list">
               {task.subtasks.map((subtask) => (
                 <div className={cx('subtask', subtask.done && 'is-done')} key={subtask.id}>

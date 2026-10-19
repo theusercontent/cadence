@@ -2,8 +2,8 @@ import type { ReactNode } from 'react'
 import { CalendarDays, ChevronRight } from 'lucide-react'
 import type { Project, Task, User } from '../types'
 import { formatDueDate, isOverdue } from '../lib/dates'
-import { cx } from '../lib/utils'
-import { Avatar, CheckToggle, ProjectChip } from './ui'
+import { cx, stepProgress } from '../lib/utils'
+import { Avatar, CheckToggle, ProgressBar, ProjectChip } from './ui'
 
 export function PageHeader({
   eyebrow,
@@ -49,6 +49,7 @@ export function TaskRow({
 }) {
   const done = task.status === 'done'
   const overdue = isOverdue(task.dueDate, done)
+  const steps = stepProgress(task.subtasks)
   return (
     <article
       className={cx('task-row', done && 'is-completed', compact && 'task-row-compact')}
@@ -72,12 +73,20 @@ export function TaskRow({
           {task.labels.slice(0, compact ? 1 : 2).map((label) => (
             <span className="task-label" key={label}>{label}</span>
           ))}
-          {task.subtasks.length > 0 && (
-            <span className="task-meta-count">
-              {task.subtasks.filter((subtask) => subtask.done).length}/{task.subtasks.length} steps
-            </span>
-          )}
         </span>
+        {steps.total > 0 && (
+          <div className="task-row-steps">
+            <ProgressBar
+              value={steps.pct}
+              tone={project?.color}
+              className="task-row-progress"
+              label={`${steps.done} of ${steps.total} steps complete`}
+            />
+            <span className="task-row-step-count" aria-hidden="true">
+              {steps.done}/{steps.total} steps
+            </span>
+          </div>
+        )}
       </div>
       <div className="task-row-side">
         {task.dueDate && (
