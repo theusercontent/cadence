@@ -79,6 +79,7 @@ Because routing is hash-based, deep links such as `/#/tasks` work without server
 
 ## Privacy and security notes
 
+- The production server sends a restrictive Content Security Policy that only permits same-origin scripts, styles, connections, workers, and media capabilities, keeping the app local-only in practice as well as by design.
 - The workspace is stored in the browser and is readable by anyone with access to that browser profile. Backups contain hashed credentials and should be kept private.
 - Local accounts are suitable for a demo or an offline team utility, not as a replacement for central identity management.
 - Clearing browser storage permanently deletes the workspace. Export a backup first.

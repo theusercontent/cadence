@@ -59,6 +59,9 @@ const server = createServer(async (request, response) => {
         file.endsWith('index.html') || file.endsWith('sw.js')
           ? 'no-cache, no-store, must-revalidate'
           : 'public, max-age=31536000, immutable',
+      'Content-Security-Policy':
+        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+      'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
       'X-Content-Type-Options': 'nosniff',
       'Referrer-Policy': 'same-origin',
     })
