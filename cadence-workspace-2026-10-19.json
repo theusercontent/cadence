@@ -1,0 +1,847 @@
+{
+  "app": "cadence",
+  "exportedAt": "2026-10-19T03:58:30.727Z",
+  "data": {
+    "version": 2,
+    "createdAt": "2026-10-19T00:42:20.336Z",
+    "users": [
+      {
+        "id": "u-ava",
+        "name": "Ava Chen",
+        "email": "ava@cadence.app",
+        "role": "admin",
+        "department": "Leadership",
+        "title": "Chief of Staff",
+        "tone": "#8B6CF0",
+        "active": true,
+        "createdAt": "2025-08-25T04:00:00.000Z",
+        "lastSeenAt": "2026-10-19T00:44:20.644Z",
+        "passwordHash": "ELYxosPBMla3uTEY2vKMtbavt5n/BT8vOB8Yfncwqzs=",
+        "salt": "3emGKua/VPwEY1TIbZuOEA=="
+      },
+      {
+        "id": "u-marcus",
+        "name": "Marcus Reed",
+        "email": "marcus@cadence.app",
+        "role": "manager",
+        "department": "Product",
+        "title": "Head of Product",
+        "tone": "#2F6FED",
+        "active": true,
+        "createdAt": "2025-10-04T04:00:00.000Z",
+        "lastSeenAt": "2026-10-18T22:42:20.228Z",
+        "passwordHash": "2rCUwpBhoQc9sTbSnWtDz0NUS7RiIY0e0ViatiD+tgs=",
+        "salt": "piEQ7/XD8/zQSIbjc9huAg=="
+      },
+      {
+        "id": "u-maya",
+        "name": "Maya Patel",
+        "email": "maya@cadence.app",
+        "role": "employee",
+        "department": "Design",
+        "title": "Product Designer",
+        "tone": "#E06C94",
+        "active": true,
+        "createdAt": "2025-12-13T04:00:00.000Z",
+        "lastSeenAt": "2026-10-18T23:42:20.228Z",
+        "passwordHash": "IBTkSFiSCFvmdAe8xy+x8eFLGbroYxY5V2g4CUoSYmY=",
+        "salt": "Ge6xc3Yg6rXPgqY2jIpznw=="
+      },
+      {
+        "id": "u-daniel",
+        "name": "Daniel Kim",
+        "email": "daniel@cadence.app",
+        "role": "employee",
+        "department": "Engineering",
+        "title": "Staff Engineer",
+        "tone": "#3FA77A",
+        "active": true,
+        "createdAt": "2025-12-23T04:00:00.000Z",
+        "lastSeenAt": "2026-10-18T20:42:20.228Z",
+        "passwordHash": "h+hZtkHULEs5y2fyJ29UDfq0VTcuSOu4ImoKAcQ7WgI=",
+        "salt": "+ruuKgyTPq5C0IGrSC81Cw=="
+      },
+      {
+        "id": "u-sofia",
+        "name": "Sofia Rossi",
+        "email": "sofia@cadence.app",
+        "role": "manager",
+        "department": "Operations",
+        "title": "Operations Lead",
+        "tone": "#E58F3A",
+        "active": true,
+        "createdAt": "2026-01-12T04:00:00.000Z",
+        "lastSeenAt": "2026-10-18T21:42:20.228Z",
+        "passwordHash": "fj/9RL06BcsuF4CmwzYKr57tl8jFwzB33uawshWA80M=",
+        "salt": "owvISBD3FxzbzGKvr208dg=="
+      },
+      {
+        "id": "u-noah",
+        "name": "Noah Williams",
+        "email": "noah@cadence.app",
+        "role": "viewer",
+        "department": "Finance",
+        "title": "Finance Analyst",
+        "tone": "#5E6A78",
+        "active": true,
+        "createdAt": "2026-04-22T04:00:00.000Z",
+        "lastSeenAt": "2026-10-17T19:42:20.228Z",
+        "passwordHash": "7BpGQZ+RhzfZ6jUKpd/EXW6/Wx0qVG7npCo5In9zyPA=",
+        "salt": "LWi8IjBCvDDON3byxxphyQ=="
+      },
+      {
+        "id": "u-priya",
+        "name": "Priya Shah",
+        "email": "priya@cadence.app",
+        "role": "employee",
+        "department": "Engineering",
+        "title": "Senior Engineer",
+        "tone": "#2BA6B8",
+        "active": true,
+        "createdAt": "2026-05-22T04:00:00.000Z",
+        "lastSeenAt": "2026-10-18T18:42:20.228Z",
+        "passwordHash": "I/6SSDsPbFaD22rTOmWr9p6aY9eiVLOiZpGi0AKzTZg=",
+        "salt": "RRANyLnSq9xpyOi+oN9BSg=="
+      },
+      {
+        "id": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "name": "Akaash",
+        "email": "ak@cadence.app",
+        "role": "admin",
+        "department": "Leadership",
+        "title": "Founder & CEO",
+        "tone": "#8B6CF0",
+        "active": true,
+        "passwordHash": "z/OgZJk/t7Kv5CQenaVZhBSgdMya0K9kBkMSeDKxm7o=",
+        "salt": "mu/uiO8a/Eg9+wAVFzLIig==",
+        "createdAt": "2026-10-19T00:49:33.898Z",
+        "lastSeenAt": "2026-10-19T00:50:41.544Z"
+      }
+    ],
+    "projects": [
+      {
+        "id": "p-620c0317-b65d-492a-99a4-d34ec79bc8ce",
+        "name": "VPS | MEC Dashboard",
+        "description": "",
+        "color": "#2F6FED",
+        "status": "active",
+        "visibility": "team",
+        "department": "Leadership",
+        "leadId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "memberIds": [
+          "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+          "u-ava"
+        ],
+        "dueDate": "2026-10-31",
+        "createdAt": "2026-10-19T01:17:41.449Z"
+      },
+      {
+        "id": "p-fc6ae0a5-97f2-4a9b-b8f3-14dfdcd53a55",
+        "name": "Cadence",
+        "description": "Enhancements and Bug Fixes of Cadence App will be tracked here.",
+        "color": "#E58F3A",
+        "status": "active",
+        "visibility": "team",
+        "department": "Leadership",
+        "leadId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "memberIds": [
+          "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+          "u-ava"
+        ],
+        "dueDate": "2026-11-30",
+        "createdAt": "2026-10-19T01:01:07.191Z"
+      },
+      {
+        "id": "p-bc277a3f-1755-4aad-95bc-aa2967422237",
+        "name": "STeP - Stretegic Technologies Partner",
+        "description": "",
+        "color": "#2F6FED",
+        "status": "active",
+        "visibility": "workspace",
+        "department": "Leadership",
+        "leadId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "memberIds": [
+          "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+          "u-ava"
+        ],
+        "dueDate": "2026-12-31",
+        "createdAt": "2026-10-19T00:52:21.482Z"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "t-61b3c77b-b83e-41b3-9e30-1301a0da4a0f",
+        "title": "Add Name instead of Unassigned in Task Creation",
+        "description": "Task creation is currently showing Employee Name linked to Project or Unassigned. We'll need to include Add User (Some user name, outside of Project or not part of our Project). This Enhancement will help track the overall Tasks which are pending with whom.",
+        "status": "todo",
+        "priority": "high",
+        "projectId": "p-fc6ae0a5-97f2-4a9b-b8f3-14dfdcd53a55",
+        "assigneeId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "creatorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "dueDate": "2026-10-21",
+        "labels": [
+          "Enhancement"
+        ],
+        "subtasks": [],
+        "comments": [],
+        "createdAt": "2026-10-19T01:41:19.633Z",
+        "updatedAt": "2026-10-19T01:41:19.633Z",
+        "completedAt": null,
+        "order": 5
+      },
+      {
+        "id": "t-71f6e435-5396-4afe-a768-e1e2023b254a",
+        "title": "MEC Pre-Analysis Dashboard",
+        "description": "",
+        "status": "review",
+        "priority": "medium",
+        "projectId": "p-620c0317-b65d-492a-99a4-d34ec79bc8ce",
+        "assigneeId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "creatorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "dueDate": "2026-10-21",
+        "labels": [
+          "Development"
+        ],
+        "subtasks": [
+          {
+            "id": "s-fadafdd2-dcf9-498e-8fc4-b05d6431ae90",
+            "title": "Query Building",
+            "done": false
+          },
+          {
+            "id": "s-714026ee-db0c-4ae8-94d1-e54dbf2b0cf2",
+            "title": "Logic Extraction",
+            "done": false
+          },
+          {
+            "id": "s-93a8be75-997d-4792-9c2c-d08121fbb339",
+            "title": "Development",
+            "done": false
+          },
+          {
+            "id": "s-0c83a5d3-fde1-49b1-ab08-03f8a7e82368",
+            "title": "Testing",
+            "done": false
+          },
+          {
+            "id": "s-d332fe9f-72f7-43d6-a976-39f53aaff4ba",
+            "title": "Deployment",
+            "done": false
+          }
+        ],
+        "comments": [],
+        "createdAt": "2026-10-19T01:19:38.021Z",
+        "updatedAt": "2026-10-19T03:04:16.800Z",
+        "completedAt": null,
+        "order": 4
+      },
+      {
+        "id": "t-e278f3d5-89dd-4268-8c74-bdb5b91bd025",
+        "title": "Progress Bar under Each Task",
+        "description": "Setup a Progress Bar under each task, which reflects the Completion of Steps for each Task.",
+        "status": "done",
+        "priority": "low",
+        "projectId": "p-fc6ae0a5-97f2-4a9b-b8f3-14dfdcd53a55",
+        "assigneeId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "creatorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "dueDate": "2026-10-20",
+        "labels": [
+          "Enhancement"
+        ],
+        "subtasks": [],
+        "comments": [],
+        "createdAt": "2026-10-19T01:08:58.461Z",
+        "updatedAt": "2026-10-19T03:55:47.724Z",
+        "completedAt": "2026-10-19T03:55:47.724Z",
+        "order": 3
+      },
+      {
+        "id": "t-3be1e45a-2aeb-4083-8ac3-b44aabd4d4ae",
+        "title": "Export Data to CSV",
+        "description": "Cadence currently exports JSON only, not CSV.",
+        "status": "todo",
+        "priority": "medium",
+        "projectId": "p-fc6ae0a5-97f2-4a9b-b8f3-14dfdcd53a55",
+        "assigneeId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "creatorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "dueDate": "2026-10-20",
+        "labels": [
+          "Enhancement"
+        ],
+        "subtasks": [],
+        "comments": [],
+        "createdAt": "2026-10-19T01:03:46.287Z",
+        "updatedAt": "2026-10-19T01:03:46.287Z",
+        "completedAt": null,
+        "order": 2
+      },
+      {
+        "id": "t-4b2517c1-9e8d-46bd-adc2-c7cdd2428b42",
+        "title": "Create New Source Group",
+        "description": "Email Reference : Create source group- RITM1804556\n\nADO REFERENCE : \nChange Request 131238: Creation of New Source Groups for Blacklisted Vendors – RITM1804556",
+        "status": "in_progress",
+        "priority": "low",
+        "projectId": "p-bc277a3f-1755-4aad-95bc-aa2967422237",
+        "assigneeId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "creatorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "dueDate": "2026-10-20",
+        "labels": [
+          "Configuration"
+        ],
+        "subtasks": [
+          {
+            "id": "s-e4cd8537-34fe-4e5b-ade5-3216bf4ec11b",
+            "title": "BAT",
+            "done": true
+          },
+          {
+            "id": "s-36d9defa-b017-4cd7-b1ce-0313eef205ef",
+            "title": "MIGRATION APPROVAL [DEV to SIT]",
+            "done": false
+          },
+          {
+            "id": "s-5fc7e79a-ae62-4711-aada-43d06a0b8820",
+            "title": "SIT",
+            "done": false
+          },
+          {
+            "id": "s-a5bec118-aae4-440a-aa37-eb30f8cd1745",
+            "title": "MIGRATION APPROVAL [SIT to UAT]",
+            "done": false
+          },
+          {
+            "id": "s-9f4878c6-00af-4143-9c45-42970998cb80",
+            "title": "UAT - USER CONFIRMATION",
+            "done": false
+          },
+          {
+            "id": "s-12a9b9c9-e905-41cd-855b-1f2843b5c2bb",
+            "title": "MIGRATION APPROVAL [UAT to PROD]",
+            "done": false
+          },
+          {
+            "id": "s-07a576a6-86c0-4c4e-b32c-6569e3dfaf8b",
+            "title": "PROD COMPLETION",
+            "done": false
+          }
+        ],
+        "comments": [
+          {
+            "id": "c-1d6dc48f-1fbb-450c-9e01-e02737799da9",
+            "authorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+            "body": "BAT Completed. Awaiting Approval to Migrate this from Dev-1 to SIT.",
+            "createdAt": "2026-10-19T00:56:44.591Z"
+          }
+        ],
+        "createdAt": "2026-10-19T00:55:10.760Z",
+        "updatedAt": "2026-10-19T03:04:07.462Z",
+        "completedAt": null,
+        "order": 1
+      }
+    ],
+    "activities": [
+      {
+        "id": "a-20ce6ac4-e9df-4009-806e-3eae9bdfccb2",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "task.status",
+        "entityType": "task",
+        "entityId": "t-e278f3d5-89dd-4268-8c74-bdb5b91bd025",
+        "message": "moved “Progress Bar under Each Task” to Done",
+        "createdAt": "2026-10-19T03:55:47.724Z"
+      },
+      {
+        "id": "a-afad96e1-7181-43e1-ac59-8aaa4490eac4",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "task.status",
+        "entityType": "task",
+        "entityId": "t-71f6e435-5396-4afe-a768-e1e2023b254a",
+        "message": "moved “MEC Pre-Analysis Dashboard” to In review",
+        "createdAt": "2026-10-19T03:04:16.800Z"
+      },
+      {
+        "id": "a-6a86d72f-0e27-4f65-89d2-aac745d77742",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "task.status",
+        "entityType": "task",
+        "entityId": "t-4b2517c1-9e8d-46bd-adc2-c7cdd2428b42",
+        "message": "moved “Create New Source Group” to In progress",
+        "createdAt": "2026-10-19T03:04:07.462Z"
+      },
+      {
+        "id": "a-86433a31-110f-4ac1-b3cc-765165c12112",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "task.create",
+        "entityType": "task",
+        "entityId": "t-61b3c77b-b83e-41b3-9e30-1301a0da4a0f",
+        "message": "added “Add Name instead of Unassigned in Task Creation” to Cadence",
+        "createdAt": "2026-10-19T01:41:19.633Z"
+      },
+      {
+        "id": "a-67e7d219-fee6-408b-88a8-4a7793c76988",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "task.create",
+        "entityType": "task",
+        "entityId": "t-71f6e435-5396-4afe-a768-e1e2023b254a",
+        "message": "added “MEC Pre-Analysis Dashboard” to VPS | MEC Dashboard",
+        "createdAt": "2026-10-19T01:19:38.021Z"
+      },
+      {
+        "id": "a-d05aa53c-a084-491a-a97a-a9653fdf6e2b",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "task.delete",
+        "entityType": "task",
+        "entityId": "t-5151ab98-fff6-4eec-8853-ecb28c7aecdf",
+        "message": "deleted “Build Dashboard Reports Query”",
+        "createdAt": "2026-10-19T01:19:08.463Z"
+      },
+      {
+        "id": "a-9762b939-efff-4411-bf69-7a7e41ba01ea",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "task.create",
+        "entityType": "task",
+        "entityId": "t-5151ab98-fff6-4eec-8853-ecb28c7aecdf",
+        "message": "added “Build Dashboard Reports Query” to VPS | MEC Dashboard",
+        "createdAt": "2026-10-19T01:18:56.133Z"
+      },
+      {
+        "id": "a-b1caba1b-af54-46b4-b5b1-2795768d3098",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "project.create",
+        "entityType": "project",
+        "entityId": "p-620c0317-b65d-492a-99a4-d34ec79bc8ce",
+        "message": "created the project “VPS | MEC Dashboard”",
+        "createdAt": "2026-10-19T01:17:41.449Z"
+      },
+      {
+        "id": "a-436e431e-9d08-4326-af3a-3ded1ff81cf2",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "task.create",
+        "entityType": "task",
+        "entityId": "t-e278f3d5-89dd-4268-8c74-bdb5b91bd025",
+        "message": "added “Progress Bar under Each Task” to Cadence",
+        "createdAt": "2026-10-19T01:08:58.461Z"
+      },
+      {
+        "id": "a-e15f466b-de11-4148-8666-67c267fd9c5b",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "task.create",
+        "entityType": "task",
+        "entityId": "t-3be1e45a-2aeb-4083-8ac3-b44aabd4d4ae",
+        "message": "added “Export Data to CSV” to Cadence",
+        "createdAt": "2026-10-19T01:03:46.287Z"
+      },
+      {
+        "id": "a-5cc3c242-caf6-4f63-8783-e71e11a33eeb",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "project.create",
+        "entityType": "project",
+        "entityId": "p-fc6ae0a5-97f2-4a9b-b8f3-14dfdcd53a55",
+        "message": "created the project “Cadence”",
+        "createdAt": "2026-10-19T01:01:07.191Z"
+      },
+      {
+        "id": "a-07abcc13-4aa4-489f-b64f-eccf859195a1",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "task.comment",
+        "entityType": "task",
+        "entityId": "t-4b2517c1-9e8d-46bd-adc2-c7cdd2428b42",
+        "message": "commented on “Create New Source Group”",
+        "createdAt": "2026-10-19T00:56:44.591Z"
+      },
+      {
+        "id": "a-33c2fde9-7c71-42c6-999a-917232729d55",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "task.create",
+        "entityType": "task",
+        "entityId": "t-4b2517c1-9e8d-46bd-adc2-c7cdd2428b42",
+        "message": "added “Create New Source Group” to STeP - Stretegic Technologies Partner",
+        "createdAt": "2026-10-19T00:55:10.760Z"
+      },
+      {
+        "id": "a-420185db-563e-4d81-8766-1e7d33dbc9e4",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "project.create",
+        "entityType": "project",
+        "entityId": "p-bc277a3f-1755-4aad-95bc-aa2967422237",
+        "message": "created the project “STeP - Stretegic Technologies Partner”",
+        "createdAt": "2026-10-19T00:52:21.482Z"
+      },
+      {
+        "id": "a-19bdf68c-6278-4d8e-af58-c5b3e51831cc",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "project.delete",
+        "entityType": "project",
+        "entityId": "p-atlas",
+        "message": "deleted the project “Atlas Experience Refresh” and 4 tasks",
+        "createdAt": "2026-10-19T00:51:22.141Z"
+      },
+      {
+        "id": "a-b8add3ef-4f7f-485d-adda-47ee974ce75c",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "project.delete",
+        "entityType": "project",
+        "entityId": "p-brand",
+        "message": "deleted the project “Brand System” and 4 tasks",
+        "createdAt": "2026-10-19T00:51:18.519Z"
+      },
+      {
+        "id": "a-b7a76a95-d621-4848-b8dd-2d26b2f292d4",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "project.delete",
+        "entityType": "project",
+        "entityId": "p-onboarding",
+        "message": "deleted the project “Client Onboarding” and 3 tasks",
+        "createdAt": "2026-10-19T00:51:14.236Z"
+      },
+      {
+        "id": "a-804b4292-f0ab-4850-bac5-ecb55a369b0e",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "project.delete",
+        "entityType": "project",
+        "entityId": "p-mobile",
+        "message": "deleted the project “Mobile 2.4” and 4 tasks",
+        "createdAt": "2026-10-19T00:51:09.310Z"
+      },
+      {
+        "id": "a-9e904bd3-a5ee-434d-be98-50be442ce51b",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "project.delete",
+        "entityType": "project",
+        "entityId": "p-q4",
+        "message": "deleted the project “FY27 Planning” and 6 tasks",
+        "createdAt": "2026-10-19T00:50:58.609Z"
+      },
+      {
+        "id": "a-6430c12c-3dc3-4040-8296-ecf69c7fb97f",
+        "actorId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "action": "auth.login",
+        "entityType": "session",
+        "entityId": null,
+        "message": "signed in on this device",
+        "createdAt": "2026-10-19T00:50:41.544Z"
+      },
+      {
+        "id": "a-0ef5548b-f59a-475c-8b4a-6bee57fb72ad",
+        "actorId": "u-ava",
+        "action": "user.update",
+        "entityType": "user",
+        "entityId": "u-daniel",
+        "message": "reactivated Daniel Kim",
+        "createdAt": "2026-10-19T00:50:18.196Z"
+      },
+      {
+        "id": "a-430022ec-4f94-4c86-8e3a-5bd1a6f15926",
+        "actorId": "u-ava",
+        "action": "user.update",
+        "entityType": "user",
+        "entityId": "u-daniel",
+        "message": "deactivated Daniel Kim",
+        "createdAt": "2026-10-19T00:50:03.217Z"
+      },
+      {
+        "id": "a-9843395b-d10d-4786-b80e-a03050d36221",
+        "actorId": "u-ava",
+        "action": "user.create",
+        "entityType": "user",
+        "entityId": "u-80cf807a-a6b8-4f2c-a429-8df043607e41",
+        "message": "added Akaash to the workspace",
+        "createdAt": "2026-10-19T00:49:33.898Z"
+      },
+      {
+        "id": "a-f55058b3-761b-443f-9ecc-36ea598aa408",
+        "actorId": "u-ava",
+        "action": "task.delete",
+        "entityType": "task",
+        "entityId": "t-005",
+        "message": "deleted “Review accessibility checklist”",
+        "createdAt": "2026-10-19T00:46:08.983Z"
+      },
+      {
+        "id": "a-324b985a-4bb4-43cb-9f2d-330fc8af60f6",
+        "actorId": "u-ava",
+        "action": "task.delete",
+        "entityType": "task",
+        "entityId": "t-014",
+        "message": "deleted “Send Meridian onboarding kit”",
+        "createdAt": "2026-10-19T00:46:05.698Z"
+      },
+      {
+        "id": "a-7188bf6e-8550-4a22-aa2f-a8979f7e3f26",
+        "actorId": "u-ava",
+        "action": "task.delete",
+        "entityType": "task",
+        "entityId": "t-010",
+        "message": "deleted “Book quarterly offsite”",
+        "createdAt": "2026-10-19T00:46:01.440Z"
+      },
+      {
+        "id": "a-942b6aa9-f3a5-4afd-84b0-69ab4bd25088",
+        "actorId": "u-ava",
+        "action": "task.delete",
+        "entityType": "task",
+        "entityId": "t-022",
+        "message": "deleted “Write 2.4 release notes”",
+        "createdAt": "2026-10-19T00:45:57.137Z"
+      },
+      {
+        "id": "a-6bbe91c1-d257-4e65-987c-b7d370485ca8",
+        "actorId": "u-ava",
+        "action": "task.delete",
+        "entityType": "task",
+        "entityId": "t-006",
+        "message": "deleted “Draft launch email”",
+        "createdAt": "2026-10-19T00:45:53.802Z"
+      },
+      {
+        "id": "a-48256a81-6116-42ec-b87e-1b39ce883e19",
+        "actorId": "u-ava",
+        "action": "task.delete",
+        "entityType": "task",
+        "entityId": "t-015",
+        "message": "deleted “Schedule kickoff with legal”",
+        "createdAt": "2026-10-19T00:45:50.390Z"
+      },
+      {
+        "id": "a-14955448-d999-40ae-86fe-ce71ce687bb8",
+        "actorId": "u-ava",
+        "action": "auth.login",
+        "entityType": "session",
+        "entityId": null,
+        "message": "signed in on this device",
+        "createdAt": "2026-10-19T00:44:20.645Z"
+      },
+      {
+        "actorId": "u-daniel",
+        "action": "task.status",
+        "entityType": "task",
+        "entityId": "t-019",
+        "message": "moved “Fix offline sync edge case” to In progress",
+        "createdAt": "2026-10-18T21:42:20.228Z",
+        "id": "a-seed-1"
+      },
+      {
+        "actorId": "u-sofia",
+        "action": "task.comment",
+        "entityType": "task",
+        "entityId": "t-014",
+        "message": "commented on “Send Meridian onboarding kit”",
+        "createdAt": "2026-10-18T22:42:20.228Z",
+        "id": "a-seed-2"
+      },
+      {
+        "actorId": "u-ava",
+        "action": "task.comment",
+        "entityType": "task",
+        "entityId": "t-007",
+        "message": "left feedback on “Draft FY27 operating narrative”",
+        "createdAt": "2026-10-18T17:42:20.228Z",
+        "id": "a-seed-3"
+      },
+      {
+        "actorId": "u-marcus",
+        "action": "task.assign",
+        "entityType": "task",
+        "entityId": "t-001",
+        "message": "assigned “Synthesize usability findings” to Maya Patel",
+        "createdAt": "2026-10-18T16:42:20.228Z",
+        "id": "a-seed-4"
+      },
+      {
+        "actorId": "u-noah",
+        "action": "task.complete",
+        "entityType": "task",
+        "entityId": "t-018",
+        "message": "completed “Confirm finance permissions”",
+        "createdAt": "2026-10-18T04:00:00.000Z",
+        "id": "a-seed-5"
+      },
+      {
+        "actorId": "u-maya",
+        "action": "task.complete",
+        "entityType": "task",
+        "entityId": "t-024",
+        "message": "completed “Export final logo lockups”",
+        "createdAt": "2026-10-18T04:00:00.000Z",
+        "id": "a-seed-6"
+      },
+      {
+        "actorId": "u-priya",
+        "action": "task.create",
+        "entityType": "task",
+        "entityId": "t-020",
+        "message": "added “Review mobile test matrix” to Mobile 2.4",
+        "createdAt": "2026-10-18T04:00:00.000Z",
+        "id": "a-seed-7"
+      },
+      {
+        "actorId": "u-sofia",
+        "action": "project.create",
+        "entityType": "project",
+        "entityId": "p-onboarding",
+        "message": "created the project “Client Onboarding”",
+        "createdAt": "2026-10-17T04:00:00.000Z",
+        "id": "a-seed-8"
+      },
+      {
+        "actorId": "u-daniel",
+        "action": "task.complete",
+        "entityType": "task",
+        "entityId": "t-011",
+        "message": "completed “Complete security training”",
+        "createdAt": "2026-10-17T04:00:00.000Z",
+        "id": "a-seed-9"
+      },
+      {
+        "actorId": "u-marcus",
+        "action": "task.complete",
+        "entityType": "task",
+        "entityId": "t-012",
+        "message": "completed “Q3 retro notes”",
+        "createdAt": "2026-10-16T04:00:00.000Z",
+        "id": "a-seed-10"
+      },
+      {
+        "actorId": "u-ava",
+        "action": "project.create",
+        "entityType": "project",
+        "entityId": "p-q4",
+        "message": "created the project “FY27 Planning”",
+        "createdAt": "2026-10-15T04:00:00.000Z",
+        "id": "a-seed-11"
+      },
+      {
+        "actorId": "u-maya",
+        "action": "task.complete",
+        "entityType": "task",
+        "entityId": "t-027",
+        "message": "completed “Archive old design files”",
+        "createdAt": "2026-10-15T04:00:00.000Z",
+        "id": "a-seed-12"
+      },
+      {
+        "actorId": "u-sofia",
+        "action": "task.complete",
+        "entityType": "task",
+        "entityId": "t-013",
+        "message": "completed “Update team handbook”",
+        "createdAt": "2026-10-14T04:00:00.000Z",
+        "id": "a-seed-13"
+      }
+    ],
+    "settings": {
+      "u-ava": {
+        "theme": "system",
+        "weekStartsOn": 0,
+        "reduceMotion": false
+      },
+      "u-marcus": {
+        "theme": "system",
+        "weekStartsOn": 0,
+        "reduceMotion": false
+      },
+      "u-maya": {
+        "theme": "system",
+        "weekStartsOn": 0,
+        "reduceMotion": false
+      },
+      "u-daniel": {
+        "theme": "system",
+        "weekStartsOn": 0,
+        "reduceMotion": false
+      },
+      "u-sofia": {
+        "theme": "system",
+        "weekStartsOn": 0,
+        "reduceMotion": false
+      },
+      "u-noah": {
+        "theme": "system",
+        "weekStartsOn": 0,
+        "reduceMotion": false
+      },
+      "u-priya": {
+        "theme": "system",
+        "weekStartsOn": 0,
+        "reduceMotion": false
+      },
+      "u-80cf807a-a6b8-4f2c-a429-8df043607e41": {
+        "theme": "system",
+        "weekStartsOn": 1,
+        "reduceMotion": false
+      }
+    },
+    "memory": {
+      "u-ava": {
+        "lastRoute": "/team",
+        "lastTaskId": "t-005",
+        "recentSearches": [
+          "board pre-read",
+          "budget"
+        ],
+        "lastSeenAt": "2026-10-19T00:44:20.644Z",
+        "logins": 49
+      },
+      "u-marcus": {
+        "lastRoute": "/board",
+        "lastTaskId": "t-019",
+        "recentSearches": [
+          "sync",
+          "atlas"
+        ],
+        "lastSeenAt": "2026-10-18T22:42:20.228Z",
+        "logins": 37
+      },
+      "u-maya": {
+        "lastRoute": "/tasks",
+        "lastTaskId": "t-001",
+        "recentSearches": [
+          "research",
+          "brand"
+        ],
+        "lastSeenAt": "2026-10-18T23:42:20.228Z",
+        "logins": 52
+      },
+      "u-daniel": {
+        "lastRoute": "/board",
+        "lastTaskId": "t-019",
+        "recentSearches": [
+          "offline"
+        ],
+        "lastSeenAt": "2026-10-18T20:42:20.228Z",
+        "logins": 29
+      },
+      "u-sofia": {
+        "lastRoute": "/projects",
+        "lastTaskId": "t-014",
+        "recentSearches": [
+          "meridian"
+        ],
+        "lastSeenAt": "2026-10-18T21:42:20.228Z",
+        "logins": 31
+      },
+      "u-noah": {
+        "lastRoute": "/calendar",
+        "lastTaskId": "t-015",
+        "recentSearches": [],
+        "lastSeenAt": "2026-10-17T19:42:20.228Z",
+        "logins": 9
+      },
+      "u-priya": {
+        "lastRoute": "/overview",
+        "lastTaskId": "t-016",
+        "recentSearches": [
+          "test matrix"
+        ],
+        "lastSeenAt": "2026-10-18T18:42:20.228Z",
+        "logins": 17
+      },
+      "u-80cf807a-a6b8-4f2c-a429-8df043607e41": {
+        "lastRoute": "/settings",
+        "lastTaskId": "t-3be1e45a-2aeb-4083-8ac3-b44aabd4d4ae",
+        "recentSearches": [],
+        "lastSeenAt": "2026-10-19T00:50:41.544Z",
+        "logins": 1
+      }
+    }
+  }
+}
