@@ -58,8 +58,10 @@ import {
   isAdmin,
   isWriter,
   projectForTask,
+  visibleTasks,
 } from '../lib/permissions'
-import { downloadJson, initials, uid } from '../lib/utils'
+import { buildTaskReportCsv } from '../lib/report'
+import { downloadCsv, downloadJson, initials, uid } from '../lib/utils'
 import { BootScreen } from '../components/BootScreen'
 
 export type ToastTone = 'success' | 'error' | 'info'
@@ -125,6 +127,7 @@ export interface StoreValue {
   rememberTask: (taskId: string) => void
   rememberSearch: (term: string) => void
   clearRecentSearches: () => void
+  exportTaskReport: () => void
   exportWorkspace: () => void
   exportPersonal: () => void
   importWorkspace: (json: string) => Promise<StoreResult>
@@ -955,6 +958,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     notify('Search memory cleared.')
   }
 
+  const exportTaskReport = (): void => {
+    const workspace = requireData()
+    const actor = requireUser()
+    const tasks = visibleTasks(actor, workspace)
+    const csv = buildTaskReportCsv(tasks, workspace.projects, workspace.users)
+    downloadCsv(`cadence-task-report-${new Date().toISOString().slice(0, 10)}.csv`, csv)
+    notify('Task report downloaded as CSV.')
+  }
+
   const exportWorkspace = (): void => {
     const workspace = requireData()
     const actor = requireUser()
@@ -1091,6 +1103,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     rememberTask,
     rememberSearch,
     clearRecentSearches,
+    exportTaskReport,
     exportWorkspace,
     exportPersonal,
     importWorkspace,

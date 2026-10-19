@@ -3,6 +3,7 @@ import {
   Check,
   Database,
   Download,
+  FileSpreadsheet,
   HardDrive,
   KeyRound,
   LockKeyhole,
@@ -42,6 +43,7 @@ export function SettingsPage() {
     updateProfile,
     updateSettings,
     changePassword,
+    exportTaskReport,
     exportWorkspace,
     exportPersonal,
     importWorkspace,
@@ -336,25 +338,43 @@ export function SettingsPage() {
               <div><span>Projects</span><strong>{data.projects.length}</strong></div>
               <div><span>Activity records</span><strong>{data.activities.length}</strong></div>
             </div>
-            <div className="data-actions">
-              <button className="button button-secondary" onClick={exportPersonal}>
-                <Download size={15} /> Export my data
+            <div className="export-options">
+              <button className="export-option" onClick={exportTaskReport}>
+                <span className="export-option-icon"><FileSpreadsheet size={18} /></span>
+                <span className="export-option-copy">
+                  <strong>Task report <span className="export-format">CSV</span></strong>
+                  <span>A spreadsheet-ready summary of every task you can see, including project, owner, dates, labels, and step progress.</span>
+                </span>
+                <span className="export-option-action"><Download size={14} /> Download</span>
               </button>
               {isAdmin && (
-                <button className="button button-secondary" onClick={exportWorkspace}>
-                  <HardDrive size={15} /> Full workspace backup
+                <button className="export-option" onClick={exportWorkspace}>
+                  <span className="export-option-icon is-backup"><HardDrive size={18} /></span>
+                  <span className="export-option-copy">
+                    <strong>Full workspace backup <span className="export-format">JSON</span></strong>
+                    <span>A complete local snapshot for restore or migration, including projects, people, settings, and hashed passwords.</span>
+                  </span>
+                  <span className="export-option-action"><Download size={14} /> Download</span>
                 </button>
               )}
+            </div>
+            {!isAdmin && (
+              <p className="data-note">Workspace backups are admin-only.</p>
+            )}
+            <div className="data-actions data-actions-secondary">
               {isAdmin && (
                 <button className="button button-secondary" onClick={() => fileRef.current?.click()}>
                   <Upload size={15} /> Restore backup
                 </button>
               )}
+              <button className="text-button" onClick={exportPersonal}>
+                <Download size={14} /> Export my data (JSON)
+              </button>
               <input ref={fileRef} type="file" accept="application/json,.json" onChange={(event) => void importFile(event)} hidden />
             </div>
             {importError && <div className="form-error" role="alert">{importError}</div>}
             <p className="data-note">
-              A backup contains the full workspace, including hashed passwords. Keep it somewhere safe. Restoring replaces everything currently on this device.
+              Files are saved to your browser's Downloads folder. A full backup contains the full workspace, including hashed passwords. Keep it somewhere safe. Restoring replaces everything currently on this device.
             </p>
             {isAdmin && (
               <div className="danger-zone">

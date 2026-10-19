@@ -27,13 +27,24 @@ Most task managers begin with an account and a server. Cadence begins with the w
 - **Roles with real boundaries** — admin, manager, employee, and viewer permissions are enforced in the UI and in the store, not just hidden with CSS.
 - **Memory that helps** — restores your session, last route, last task, recent searches, sign-in history, theme, and workspace activity.
 - **Quietly fast** — command palette, keyboard shortcuts, instant local writes, and hash-based routes with no round trips.
-- **Private by default** — passwords hashed locally with PBKDF2-SHA256, a strict same-origin Content Security Policy, and JSON export/import for backups.
+- **Private by default** — passwords hashed locally with PBKDF2-SHA256, a strict same-origin Content Security Policy, plus local CSV reports and JSON backup/restore.
 
 ## Step progress at a glance
 
 Every task can carry a small checklist. Cadence turns that checklist into readable progress: the bar uses the project color and shows the completed count beside it. A fully checked list reaches 100%, but the task stays open until someone decides it is actually done.
 
 ![Task steps with a 2 of 3 progress bar](docs/screenshots/task-steps.jpg)
+
+## Reports and backups
+
+Open **Settings → Local data** for two local-only exports:
+
+- **Task report (CSV)** — a spreadsheet-ready summary of every task you can see, including project, status, priority, owner, due date, labels, and step progress. It follows the same role boundaries as the rest of Cadence.
+- **Full workspace backup (JSON)** — an admin-only snapshot of the complete workspace for restore or migration.
+
+![Settings Local data with a CSV task report and JSON workspace backup](docs/screenshots/reports.jpg)
+
+Both files download through the browser. Nothing is uploaded, and the report includes no credentials.
 
 ## A quick tour
 
@@ -102,12 +113,12 @@ npm start
 ### Verification
 
 ```bash
-npm test          # 31 unit tests
+npm test          # 35 unit tests
 npm run build     # type-check, bundle, and generate the service worker
 node scripts/qa-smoke.mjs   # browser QA against a production server
 ```
 
-The browser suite walks through sign-in and session restore, offline reload, task creation, step progress, search, command palette memory, board drag and drop, calendar navigation, projects, invitations, backup validation, reset, every role boundary, and mobile layouts. Test artifacts land in `%TEMP%\opencode\cadence-qa`.
+The browser suite walks through sign-in and session restore, offline reload, task creation, step progress, search, command palette memory, board drag and drop, calendar navigation, projects, invitations, backup and CSV report validation, reset, every role boundary, and mobile layouts. Test artifacts land in `%TEMP%\opencode\cadence-qa`.
 
 ### Deployment
 

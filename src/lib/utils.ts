@@ -41,8 +41,8 @@ export function isTypingTarget(target: EventTarget | null): boolean {
   return tag === 'input' || tag === 'textarea' || tag === 'select' || target.isContentEditable
 }
 
-export function downloadJson(filename: string, data: unknown): void {
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+function downloadText(filename: string, text: string, type: string): void {
+  const blob = new Blob([text], { type })
   const url = URL.createObjectURL(blob)
   const anchor = document.createElement('a')
   anchor.href = url
@@ -51,6 +51,15 @@ export function downloadJson(filename: string, data: unknown): void {
   anchor.click()
   anchor.remove()
   URL.revokeObjectURL(url)
+}
+
+export function downloadJson(filename: string, data: unknown): void {
+  downloadText(filename, JSON.stringify(data, null, 2), 'application/json')
+}
+
+export function downloadCsv(filename: string, csv: string): void {
+  // The UTF-8 BOM keeps Excel from mangling names and labels with accents.
+  downloadText(filename, `\ufeff${csv}`, 'text/csv;charset=utf-8;')
 }
 
 export function kebabToTitle(value: string): string {

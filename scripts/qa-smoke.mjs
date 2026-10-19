@@ -525,7 +525,7 @@ async function main() {
     })
     rmSync(DOWNLOADS, { recursive: true, force: true })
     mkdirSync(DOWNLOADS, { recursive: true })
-    await clickText('.data-actions .button', 'Full workspace backup')
+    await clickText('.export-option', 'Full workspace backup')
     const deadline = Date.now() + 15000
     let downloaded = ''
     while (Date.now() < deadline) {
@@ -545,6 +545,27 @@ async function main() {
       'Backup does not contain the workspace changes',
     )
     note(`Workspace backup downloaded and validated (${downloaded})`)
+
+    await clickText('.export-option', 'Task report')
+    const csvDeadline = Date.now() + 15000
+    let csvDownloaded = ''
+    while (Date.now() < csvDeadline) {
+      const candidate = readdirSync(DOWNLOADS).find((file) => file.endsWith('.csv'))
+      if (candidate) {
+        csvDownloaded = candidate
+        break
+      }
+      await new Promise((resolve) => setTimeout(resolve, 250))
+    }
+    assert(csvDownloaded, 'Task report was not downloaded')
+    const csv = readFileSync(path.join(DOWNLOADS, csvDownloaded), 'utf8').replace(/^\ufeff/, '')
+    assert(
+      csv.startsWith('Task,Project,Status,Priority,Assignee,Creator,Due date,Labels,Steps done,Steps total,Progress %,Created,Updated,Completed'),
+      'Task report header is incomplete',
+    )
+    assert(csv.includes(QA_TASK), 'Task report does not contain the workspace task')
+    assert(csv.includes(',1,1,100,'), 'Task report does not contain step progress')
+    note(`Task report downloaded and validated (${csvDownloaded})`)
 
     await clickText('.danger-zone .button', 'Reset')
     await page.waitForSelector('.overlay-panel')
@@ -578,6 +599,7 @@ async function main() {
     await nav('Settings')
     assert(!(await page.evaluate(() => document.body.textContent.includes('Full workspace backup'))), 'Manager saw admin backup')
     assert(!(await page.evaluate(() => document.body.textContent.includes('Reset demo workspace'))), 'Manager saw workspace reset')
+    assert(await page.evaluate(() => document.body.textContent.includes('Task report')), 'Manager should be able to download the CSV report')
     await screenshot('09-manager-settings.png')
     note('Manager can create tasks/projects but cannot delete projects, manage people, back up, or reset')
     await signOutFromSettings()
@@ -598,6 +620,7 @@ async function main() {
     await nav('Settings')
     assert(!(await page.evaluate(() => document.body.textContent.includes('Full workspace backup'))), 'Employee saw admin backup')
     assert(!(await page.evaluate(() => document.body.textContent.includes('Reset demo workspace'))), 'Employee saw workspace reset')
+    assert(await page.evaluate(() => document.body.textContent.includes('Task report')), 'Employee should be able to download the CSV report')
     note('Employee can create work but has no project, people, or admin data controls')
     await signOutFromSettings()
   })
@@ -647,6 +670,7 @@ async function main() {
     await nav('Settings')
     assert(!(await page.$('.danger-zone')), 'Viewer saw workspace reset')
     assert(!(await page.evaluate(() => document.body.textContent.includes('Full workspace backup'))), 'Viewer saw admin backup')
+    assert(await page.evaluate(() => document.body.textContent.includes('Task report')), 'Viewer should be able to download the CSV report')
     await screenshot('10-viewer-settings.png')
     note('Viewer is read-only across tasks, board, projects, team, and settings')
   })

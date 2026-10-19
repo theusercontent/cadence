@@ -1142,6 +1142,15 @@
     font-size: 15px;
   }
 
+  .export-option {
+    flex-wrap: wrap;
+  }
+
+  .export-option-action {
+    flex-basis: 100%;
+    padding-left: 45px;
+  }
+
   .overlay-layer {
     padding: 0;
   }
