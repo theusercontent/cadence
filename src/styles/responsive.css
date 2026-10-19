@@ -1,0 +1,1208 @@
+/* Responsive behaviour — from wide desktop to a calm phone workspace */
+
+.app-content.is-reduced .route-view {
+  animation: none;
+}
+
+.is-busy {
+  color: var(--accent);
+}
+
+@media (max-width: 1280px) {
+  .app-content {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .topbar {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .project-grid {
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  }
+}
+
+@media (max-width: 1100px) {
+  :root {
+    --sidebar-width: 234px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(270px, 0.8fr);
+  }
+
+  .topbar-search {
+    width: 260px;
+  }
+
+  .stat-card {
+    padding: 15px 14px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .app-main {
+    margin-left: 0;
+  }
+
+  .sidebar {
+    width: 266px;
+    transform: translateX(-104%);
+    transition: transform 280ms var(--ease);
+    box-shadow: var(--shadow-lg);
+    z-index: 60;
+  }
+
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-close {
+    display: inline-flex;
+  }
+
+  .sidebar-scrim {
+    display: block;
+    z-index: 55;
+  }
+
+  .topbar-menu {
+    display: inline-flex;
+  }
+
+  .topbar-search {
+    width: min(340px, 40vw);
+  }
+
+  .app-content {
+    padding: 24px 28px 70px;
+  }
+
+  .topbar {
+    padding: 0 28px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1.3fr) minmax(270px, 0.7fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .focus-card,
+  .momentum-card,
+  .projects-overview-card,
+  .memory-preview-card {
+    padding: 18px;
+  }
+
+  .momentum-body {
+    padding-bottom: 16px;
+  }
+
+  .week-bars {
+    max-width: 460px;
+  }
+
+  .calendar-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .login-page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .login-story {
+    display: none;
+  }
+
+  .login-panel {
+    min-height: 100vh;
+    padding: 38px 28px;
+    background:
+      radial-gradient(600px 400px at 90% -10%, rgba(124, 92, 255, 0.06), transparent 60%),
+      var(--bg);
+  }
+
+  .login-mobile-brand {
+    display: flex;
+  }
+
+  .login-form-wrap {
+    width: min(420px, 100%);
+  }
+
+  .team-summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .team-access-card {
+    grid-column: span 3;
+  }
+
+  .project-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-progress-card {
+    grid-column: span 2;
+  }
+
+  .project-aside,
+  .memory-aside,
+  .settings-aside {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .app-content {
+    padding: 19px 18px 62px;
+  }
+
+  .topbar {
+    height: 60px;
+    padding: 0 18px;
+    gap: 10px;
+  }
+
+  .topbar-local {
+    display: none;
+  }
+
+  .topbar-search {
+    width: 100%;
+    max-width: 290px;
+  }
+
+  .topbar-search-key {
+    display: none;
+  }
+
+  .topbar-search-label {
+    max-width: 180px;
+  }
+
+  .topbar-new span {
+    display: none;
+  }
+
+  .topbar-new {
+    width: 34px;
+    padding: 0;
+    border-radius: 9px;
+  }
+
+  .page {
+    gap: 16px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding-top: 3px;
+  }
+
+  .page-header h1 {
+    font-size: clamp(29px, 8vw, 37px);
+  }
+
+  .page-header-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .page-header-actions .button {
+    height: 36px;
+  }
+
+  .role-context-pill {
+    display: none;
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .stat-card {
+    gap: 10px;
+    padding: 13px 12px;
+    border-radius: 14px;
+  }
+
+  .stat-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+  }
+
+  .stat-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .stat-value {
+    font-size: 23px;
+  }
+
+  .stat-foot {
+    font-size: 8.5px;
+  }
+
+  .dashboard-grid {
+    gap: 13px;
+  }
+
+  .focus-card,
+  .momentum-card,
+  .projects-overview-card,
+  .memory-preview-card {
+    padding: 15px;
+  }
+
+  .card-head h2 {
+    font-size: 17px;
+  }
+
+  .card-head {
+    gap: 10px;
+  }
+
+  .project-mini-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-mini p {
+    min-height: 0;
+  }
+
+  .activity-line time {
+    display: none;
+  }
+
+  .task-toolbar {
+    padding: 11px 12px 0;
+  }
+
+  .task-toolbar-top {
+    gap: 8px;
+  }
+
+  .filter-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    max-width: 100%;
+    scrollbar-width: none;
+  }
+
+  .filter-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .search-field {
+    max-width: none;
+    flex: 1;
+  }
+
+  .select-field {
+    max-width: 175px;
+  }
+
+  .select-sort {
+    margin-left: 0;
+  }
+
+  .task-groups {
+    padding: 6px 11px 8px;
+  }
+
+  .task-workspace-foot {
+    padding: 9px 14px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .task-row {
+    gap: 8px;
+    padding: 9px 7px;
+  }
+
+  .task-row-side {
+    gap: 7px;
+  }
+
+  .task-row-chevron {
+    display: none;
+  }
+
+  .task-row-meta {
+    gap: 6px;
+  }
+
+  .task-row-side .project-chip,
+  .task-row-meta .task-label:nth-of-type(n + 2) {
+    display: none;
+  }
+
+  .task-row-side .due-chip {
+    height: 21px;
+    padding: 0 5px;
+    font-size: 9.5px;
+  }
+
+  .kanban {
+    grid-template-columns: repeat(5, minmax(224px, 1fr));
+    gap: 10px;
+    margin: 0 -18px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .kanban-column {
+    padding: 10px;
+    min-height: 260px;
+  }
+
+  .board-toolbar {
+    gap: 7px;
+    padding: 9px;
+  }
+
+  .board-toolbar .search-field {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .board-count {
+    display: none;
+  }
+
+  .board-hint {
+    display: none;
+  }
+
+  .calendar-toolbar {
+    gap: 9px;
+    padding: 10px;
+  }
+
+  .calendar-month-nav h2 {
+    font-size: 15px;
+    min-width: 0;
+    margin: 0 4px;
+  }
+
+  .calendar-month-nav .button {
+    display: none;
+  }
+
+  .calendar-toolbar-right {
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .calendar-toolbar-right .select-field {
+    max-width: 165px;
+  }
+
+  .calendar-grid {
+    grid-auto-rows: minmax(70px, 1fr);
+  }
+
+  .calendar-day {
+    min-height: 70px;
+    padding: 5px 3px;
+  }
+
+  .calendar-day-number {
+    width: 20px;
+    height: 20px;
+    font-size: 9.5px;
+  }
+
+  .calendar-today-label {
+    display: none;
+  }
+
+  .calendar-day-count {
+    min-width: 14px;
+    height: 14px;
+    font-size: 7.5px;
+  }
+
+  .calendar-day-tasks {
+    gap: 2px;
+  }
+
+  .calendar-task {
+    padding: 2px 3px;
+    font-size: 8px;
+    border-radius: 3px;
+  }
+
+  .calendar-task-dot {
+    width: 4px;
+    height: 4px;
+  }
+
+  .calendar-more {
+    font-size: 7.5px;
+    padding: 1px 3px;
+  }
+
+  .calendar-weekdays span {
+    padding: 0 5px;
+    font-size: 7.5px;
+  }
+
+  .calendar-foot {
+    font-size: 8px;
+    padding: 8px 10px;
+  }
+
+  .day-panel {
+    padding: 15px;
+  }
+
+  .projects-toolbar {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .projects-toolbar .search-field {
+    max-width: none;
+    order: 2;
+    flex-basis: 100%;
+  }
+
+  .project-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .project-card {
+    padding: 16px;
+  }
+
+  .project-hero {
+    padding: 18px;
+  }
+
+  .project-hero-main {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .project-hero-copy > p {
+    font-size: 11.5px;
+  }
+
+  .project-hero-actions .button {
+    flex: 1;
+  }
+
+  .project-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .project-progress-card {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .project-progress-card .progress-ring {
+    width: 88px !important;
+    height: 88px !important;
+  }
+
+  .project-progress-card .progress-ring svg {
+    width: 88px;
+    height: 88px;
+  }
+
+  .project-progress-card .progress-ring-label strong {
+    font-size: 20px;
+  }
+
+  .project-detail-layout {
+    gap: 13px;
+  }
+
+  .project-tasks-card {
+    padding: 15px;
+  }
+
+  .project-aside,
+  .memory-aside,
+  .settings-aside {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project-aside .card {
+    padding: 15px;
+  }
+
+  .team-summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .team-access-card {
+    grid-column: span 3;
+  }
+
+  .team-toolbar {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .team-toolbar-right {
+    min-width: 0;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .team-toolbar-right .search-field {
+    max-width: none;
+    flex-basis: 100%;
+  }
+
+  .people-grid {
+    grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+    gap: 11px;
+  }
+
+  .access-matrix-card {
+    padding: 15px;
+  }
+
+  .memory-hero {
+    flex-wrap: wrap;
+    padding: 17px;
+    gap: 13px;
+  }
+
+  .memory-orb {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+  }
+
+  .memory-orb svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .memory-hero-copy h2 {
+    font-size: 18px;
+  }
+
+  .memory-hero-stats {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--divider);
+  }
+
+  .memory-hero-stats > div {
+    align-items: flex-start;
+  }
+
+  .memory-timeline-card {
+    padding: 15px;
+  }
+
+  .memory-toolbar {
+    gap: 8px;
+  }
+
+  .memory-search {
+    max-width: none;
+    flex-basis: 100%;
+  }
+
+  .memory-foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+
+  .memory-aside {
+    display: flex;
+    gap: 11px;
+  }
+
+  .settings-card {
+    padding: 15px;
+  }
+
+  .profile-editor {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .profile-avatar-block {
+    flex-direction: row;
+    align-items: center;
+    gap: 11px;
+    width: auto;
+  }
+
+  .settings-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+  }
+
+  .settings-row .segmented {
+    align-self: stretch;
+  }
+
+  .settings-row .segmented button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .settings-action-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+  }
+
+  .settings-action-row .button {
+    width: 100%;
+  }
+
+  .data-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .danger-zone {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .danger-zone .button {
+    width: 100%;
+  }
+
+  .settings-aside {
+    display: flex;
+  }
+
+  .access-summary-card {
+    grid-row: auto;
+  }
+
+  .form-grid.two {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .overlay-layer {
+    padding: 14px;
+  }
+
+  .overlay-panel {
+    max-height: 92vh;
+    border-radius: 20px;
+  }
+
+  .overlay-header {
+    padding: 18px 18px 13px;
+  }
+
+  .overlay-header h2 {
+    font-size: 18px;
+  }
+
+  .overlay-content {
+    padding: 4px 18px 19px;
+  }
+
+  .overlay-footer {
+    padding: 12px 18px;
+  }
+
+  .sheet-panel {
+    max-width: none;
+    width: 100%;
+    height: auto;
+    max-height: 94vh;
+    border-radius: 22px 22px 0 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .overlay-sheet-layer {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .task-detail-title {
+    font-size: 20px;
+  }
+
+  .task-detail-meta {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 13px;
+  }
+
+  .member-picker {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .footer-hint {
+    display: none;
+  }
+
+  .overlay-footer .footer-spacer {
+    flex: 1;
+  }
+
+  .toast-viewport {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    align-items: stretch;
+  }
+
+  .toast {
+    min-width: 0;
+    max-width: none;
+  }
+
+  .palette-layer {
+    padding: 6vh 12px 12px;
+  }
+
+  .palette {
+    max-height: 82vh;
+    border-radius: 17px;
+  }
+
+  .palette-search {
+    height: 52px;
+    padding: 0 14px;
+  }
+
+  .palette-search input {
+    font-size: 14px;
+  }
+
+  .palette-footer {
+    gap: 8px;
+  }
+
+  .palette-footer-brand {
+    display: none !important;
+  }
+
+  .not-found-card {
+    padding: 32px 22px;
+  }
+
+  .calendar-task {
+    font-size: 0;
+    gap: 0;
+    height: 7px;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .calendar-task-dot {
+    width: 5px;
+    height: 5px;
+    margin: 0 auto;
+  }
+
+  .calendar-task.is-done {
+    opacity: 0.35;
+  }
+
+  .calendar-day-tasks {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 2px 4px;
+  }
+
+  .calendar-more {
+    font-size: 0;
+    width: 5px;
+    height: 5px;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--text-faint);
+  }
+}
+
+@media (max-width: 560px) {
+  .app-content {
+    padding: 15px 14px 56px;
+  }
+
+  .topbar {
+    padding: 0 14px;
+  }
+
+  .topbar-search {
+    height: 34px;
+    padding-left: 10px;
+  }
+
+  .topbar-search-label {
+    font-size: 11.5px;
+    max-width: 135px;
+  }
+
+  .topbar-user .avatar {
+    width: 26px;
+    height: 26px;
+    font-size: 9px;
+  }
+
+  .user-menu {
+    width: 262px;
+    right: -2px;
+  }
+
+  .page-header-actions .button {
+    width: 100%;
+  }
+
+  .read-only-pill {
+    height: 34px;
+  }
+
+  .stat-grid {
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 12px 10px;
+  }
+
+  .stat-icon {
+    width: 29px;
+    height: 29px;
+  }
+
+  .stat-value {
+    font-size: 21px;
+  }
+
+  .stat-foot {
+    display: none;
+  }
+
+  .project-mini-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .momentum-body {
+    gap: 10px;
+  }
+
+  .momentum-body .progress-ring {
+    width: 94px !important;
+    height: 94px !important;
+  }
+
+  .momentum-body .progress-ring svg {
+    width: 94px;
+    height: 94px;
+  }
+
+  .momentum-body .progress-ring-label strong {
+    font-size: 21px;
+  }
+
+  .week-bar-track {
+    max-width: 20px;
+    height: 46px;
+  }
+
+  .task-toolbar-bottom .select-field {
+    max-width: none;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .task-toolbar-bottom .select-sort {
+    flex-basis: 100%;
+  }
+
+  .task-toolbar-bottom .clear-filters {
+    flex: none;
+  }
+
+  .task-row-side .due-chip {
+    font-size: 0;
+    width: 23px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .task-row-side .due-chip svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .task-row-side .priority-inline,
+  .task-row-side .avatar:last-of-type {
+    display: none;
+  }
+
+  .task-row-copy {
+    gap: 2px;
+  }
+
+  .task-row-title {
+    font-size: 12.5px;
+  }
+
+  .segmented button {
+    font-size: 10.5px;
+    padding: 0 9px;
+  }
+
+  .kanban {
+    margin: 0 -14px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .calendar-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .calendar-month-nav {
+    justify-content: space-between;
+  }
+
+  .calendar-toolbar-right .segmented {
+    flex: 1;
+  }
+
+  .calendar-toolbar-right .segmented button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .calendar-weekdays span {
+    font-size: 7px;
+    padding: 0 3px;
+    height: 28px;
+    justify-content: center;
+  }
+
+  .calendar-grid {
+    grid-auto-rows: minmax(58px, 1fr);
+  }
+
+  .calendar-day {
+    min-height: 58px;
+    padding: 4px 2px;
+    gap: 1px;
+  }
+
+  .calendar-day-number {
+    width: 18px;
+    height: 18px;
+    font-size: 8.5px;
+  }
+
+  .calendar-day-count {
+    display: none;
+  }
+
+  .calendar-day-tasks {
+    padding: 1px 2px;
+  }
+
+  .calendar-more {
+    display: none;
+  }
+
+  .day-panel-head h2 {
+    font-size: 19px;
+  }
+
+  .project-summary-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project-progress-card {
+    grid-column: auto;
+  }
+
+  .team-summary-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .team-access-card {
+    grid-column: auto;
+  }
+
+  .team-stat {
+    flex-direction: row;
+    align-items: center;
+    gap: 9px;
+    padding: 11px;
+  }
+
+  .team-stat .stat-icon {
+    margin: 0;
+  }
+
+  .team-stat strong {
+    font-size: 20px;
+  }
+
+  .team-stat > span:last-child {
+    font-size: 9px;
+    margin-left: auto;
+  }
+
+  .people-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .person-card {
+    padding: 15px;
+  }
+
+  .department-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+
+  .department-chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .department-chips .chip {
+    flex: none;
+  }
+
+  .memory-hero-stats {
+    gap: 9px;
+  }
+
+  .memory-hero-stats strong {
+    font-size: 17px;
+  }
+
+  .memory-hero-stats span {
+    font-size: 7.5px;
+  }
+
+  .timeline-time {
+    display: none;
+  }
+
+  .timeline-arrow {
+    display: none;
+  }
+
+  .timeline-copy {
+    font-size: 9.5px;
+  }
+
+  .settings-head {
+    flex-wrap: wrap;
+  }
+
+  .settings-head h2 {
+    font-size: 15px;
+  }
+
+  .overlay-layer {
+    padding: 0;
+  }
+
+  .overlay-panel {
+    max-height: 100vh;
+    height: 100%;
+    border-radius: 0;
+    border: 0;
+  }
+
+  .overlay-sheet-layer .sheet-panel {
+    max-height: 100vh;
+    height: 100%;
+    border-radius: 0;
+    border: 0;
+  }
+
+  .overlay-header {
+    padding-top: max(18px, env(safe-area-inset-top));
+  }
+
+  .overlay-footer {
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  .calendar-card {
+    margin: 0 -14px;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .login-panel {
+    padding: 26px 20px;
+  }
+
+  .login-heading h2 {
+    font-size: 30px;
+  }
+
+  .login-form-wrap {
+    width: 100%;
+  }
+
+  .login-privacy {
+    margin-top: 19px;
+  }
+
+  .not-found-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .not-found-actions .button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar {
+    transition: none;
+  }
+}

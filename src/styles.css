@@ -1,0 +1,14 @@
+/* Cadence stylesheet entry — ordered from foundations to page-specific surfaces */
+@import "./styles/base.css";
+@import "./styles/ui.css";
+@import "./styles/shell.css";
+@import "./styles/login.css";
+@import "./styles/tasks.css";
+@import "./styles/detail.css";
+@import "./styles/overview.css";
+@import "./styles/calendar.css";
+@import "./styles/projects.css";
+@import "./styles/team.css";
+@import "./styles/memory.css";
+@import "./styles/settings.css";
+@import "./styles/responsive.css";

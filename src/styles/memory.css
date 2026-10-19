@@ -1,0 +1,477 @@
+/* Memory — the quiet trail of local work */
+
+.memory-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 21px 23px;
+  overflow: hidden;
+  background:
+    radial-gradient(480px 220px at 0% 0%, var(--purple-soft), transparent 70%),
+    radial-gradient(360px 200px at 100% 100%, var(--accent-softer), transparent 70%),
+    var(--surface);
+}
+
+.memory-orb {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--purple) 10%, var(--surface));
+  color: var(--purple);
+  border: 1px solid color-mix(in srgb, var(--purple) 18%, transparent);
+  flex: none;
+}
+
+.memory-hero-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.memory-hero-copy h2 {
+  font-size: 20px;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+
+.memory-hero-copy p {
+  max-width: 570px;
+  margin-top: 4px;
+  color: var(--text-tertiary);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+
+.memory-hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  flex: none;
+  padding-left: 18px;
+  border-left: 1px solid var(--divider);
+}
+
+.memory-hero-stats > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.memory-hero-stats strong {
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.memory-hero-stats span {
+  color: var(--text-faint);
+  font-size: 8.5px;
+  white-space: nowrap;
+}
+
+.memory-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 342px;
+  gap: 17px;
+  align-items: start;
+}
+
+.memory-timeline-card {
+  padding: 20px;
+  min-width: 0;
+}
+
+.memory-timeline-card > .card-head {
+  margin-bottom: 13px;
+}
+
+.memory-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-bottom: 13px;
+  border-bottom: 1px solid var(--divider);
+}
+
+.memory-search {
+  max-width: 220px;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  padding-top: 15px;
+}
+
+.timeline-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.timeline-date {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 4px 6px;
+  color: var(--text-tertiary);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.timeline-date > span:first-child {
+  flex: none;
+}
+
+.timeline-date > span:last-child {
+  flex: none;
+  color: var(--text-faint);
+  font-size: 8.5px;
+  font-weight: 500;
+}
+
+.timeline-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--divider);
+}
+
+.timeline-entries {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-entry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 6px;
+  margin: 0 -6px;
+  border-radius: 9px;
+  text-align: left;
+  color: var(--text-tertiary);
+  transition: background 140ms var(--ease);
+  cursor: default;
+}
+
+.timeline-entry.is-clickable {
+  cursor: pointer;
+}
+
+.timeline-entry.is-clickable:hover {
+  background: var(--surface-soft);
+}
+
+.timeline-avatar-wrap {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+}
+
+.timeline-type {
+  position: absolute;
+  right: -4px;
+  bottom: -3px;
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--surface);
+  background: var(--surface-muted);
+  color: var(--text-tertiary);
+}
+
+.timeline-type svg {
+  width: 9px;
+  height: 9px;
+}
+
+.timeline-type.type-tasks { background: var(--blue-soft); color: var(--blue); }
+.timeline-type.type-projects { background: var(--purple-soft); color: var(--purple); }
+.timeline-type.type-people { background: var(--green-soft); color: var(--green); }
+.timeline-type.type-sessions { background: var(--orange-soft); color: var(--orange); }
+
+.timeline-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.timeline-copy > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.timeline-copy strong {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.timeline-copy small {
+  color: var(--text-faint);
+  font-size: 8.5px;
+}
+
+.timeline-time {
+  flex: none;
+  color: var(--text-faint);
+  font-size: 8.5px;
+  white-space: nowrap;
+}
+
+.timeline-arrow {
+  flex: none;
+  color: var(--text-faint);
+  opacity: 0;
+  transition: opacity 140ms var(--ease);
+}
+
+.timeline-entry.is-clickable:hover .timeline-arrow {
+  opacity: 1;
+}
+
+.memory-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 17px;
+  padding-top: 12px;
+  border-top: 1px solid var(--divider);
+  color: var(--text-faint);
+  font-size: 8.5px;
+}
+
+.memory-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  min-width: 0;
+}
+
+.memory-aside > .card {
+  padding: 17px;
+}
+
+.memory-aside .card-head {
+  margin-bottom: 11px;
+}
+
+.memory-aside h2 {
+  font-size: 16px;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.recall-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.recall-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 5px;
+  border-radius: 8px;
+  text-align: left;
+  color: var(--text-tertiary);
+  transition: background 140ms var(--ease);
+}
+
+.recall-row:not(.is-static):hover {
+  background: var(--surface-soft);
+}
+
+.recall-row.is-static {
+  cursor: default;
+}
+
+.recall-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--surface-muted);
+  color: var(--text-tertiary);
+  flex: none;
+}
+
+.recall-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+  line-height: 1.3;
+}
+
+.recall-copy small {
+  color: var(--text-faint);
+  font-size: 8.5px;
+}
+
+.recall-copy strong {
+  color: var(--text-secondary);
+  font-size: 10px;
+  font-weight: 550;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recall-row > svg {
+  flex: none;
+  color: var(--text-faint);
+}
+
+.search-memory {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--divider);
+}
+
+.search-memory-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+
+.search-memory-head > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-tertiary);
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.search-memory-head .text-button {
+  font-size: 9px;
+}
+
+.search-memory-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.search-memory-chips .chip {
+  height: 22px;
+  font-size: 9.5px;
+}
+
+.search-memory .muted {
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.memory-storage-card .local-dot {
+  width: 6px;
+  height: 6px;
+}
+
+.memory-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 9px 0 11px;
+}
+
+.memory-stats > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 9.5px;
+}
+
+.memory-stats dt {
+  color: var(--text-tertiary);
+}
+
+.memory-stats dd {
+  margin: 0;
+  color: var(--text-secondary);
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+}
+
+.storage-note {
+  color: var(--text-faint);
+  font-size: 8.5px;
+  line-height: 1.5;
+  margin-bottom: 11px;
+}
+
+.memory-quote-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  background:
+    radial-gradient(240px 150px at 80% 0%, var(--accent-softer), transparent 70%),
+    var(--surface);
+}
+
+.memory-quote-card > svg {
+  color: var(--accent);
+}
+
+.memory-quote-card p {
+  color: var(--text-secondary);
+  font-size: 11px;
+  line-height: 1.55;
+  font-style: italic;
+}
+
+.memory-quote-card span {
+  color: var(--text-faint);
+  font-size: 8.5px;
+}
+
+@media (max-width: 1180px) {
+  .memory-layout {
+    grid-template-columns: minmax(0, 1fr) 310px;
+  }
+}
+
+@media (max-width: 980px) {
+  .memory-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .memory-aside {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .memory-quote-card {
+    grid-column: span 2;
+  }
+}
