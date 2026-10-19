@@ -1,7 +1,7 @@
 {
   "name": "cadence",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Cadence — an offline-first task manager for focused teams.",
   "scripts": {
@@ -11,7 +11,8 @@
     "start": "node scripts/serve.mjs",
     "prod": "node scripts/serve.mjs",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "package:offline": "npm run build && node scripts/package-offline.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.59.0",

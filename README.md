@@ -46,6 +46,16 @@ Set `HOST` and `PORT` when needed:
 $env:HOST = '0.0.0.0'; $env:PORT = '8080'; npm start
 ```
 
+## Offline Windows package
+
+Create a self-contained Windows release with:
+
+```bash
+npm run package:offline
+```
+
+The ZIP is written to `%USERPROFILE%\Desktop\Cadence-Offline-v1.0.1-Windows.zip`. It includes the prebuilt app, a portable Node.js runtime, `run.bat`, `requirements.bat`, `README.txt`, and the Node.js license. Users only need to extract the folder and double-click `run.bat`; no npm install, account, administrator access, or internet connection is required.
+
 ## Verification
 
 ```bash
@@ -113,4 +123,10 @@ scripts/
   build-sw.mjs  generated offline service worker
   serve.mjs     dependency-free production server
   qa-smoke.mjs  browser end-to-end suite
+  package-offline.mjs  builds the portable Windows release
+packaging/
+  run.bat       Windows launcher for the portable release
+  requirements.bat  bundled-runtime and file check
+  README.txt    end-user offline guide
+  server.mjs    local server for the portable release
 ```
