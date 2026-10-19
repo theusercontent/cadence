@@ -142,7 +142,7 @@ export function Sidebar() {
             <span className={cx('sidebar-role-dot', `role-dot-${user.role}`)} title={user.role} />
           </div>
           <p className="sidebar-version">
-            Cadence 1.0 · {settings.theme === 'system' ? 'Auto theme' : `${settings.theme} theme`}
+            Cadence 1.2 · {settings.theme === 'system' ? 'Auto theme' : `${settings.theme} theme`}
           </p>
         </div>
       </aside>

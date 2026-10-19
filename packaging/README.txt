@@ -1,4 +1,4 @@
-CADENCE 1.0 - OFFLINE EDITION
+CADENCE 1.2 - OFFLINE EDITION
 =============================
 
 A calm, local-first task manager for focused teams.
@@ -57,9 +57,16 @@ This means:
   address remains http://127.0.0.1:4173/
 - Keep the port at 4173 to keep your existing data connected to the app.
 
-Back up regularly:
-Settings > Local data > Full workspace backup
+REPORTS AND BACKUPS
+-------------------
+Settings > Local data offers two downloads:
+- Task report (CSV): a role-scoped summary of every task you can see, with project,
+  status, priority, owner, dates, labels, and step progress. Opens in Excel, Numbers,
+  or Google Sheets.
+- Full workspace backup (JSON): an admin-only snapshot of the complete workspace for
+  restore or migration.
 
+Both files download through the browser. The CSV report includes no credentials.
 Backups contain the complete workspace, including password hashes. Keep them private.
 Restore with Settings > Local data > Restore backup, or reset the sample workspace
 from the same section.
@@ -106,6 +113,6 @@ its own independent workspace. This edition does not synchronize data between de
 For shared team data across devices, a secure cloud database and server-side accounts
 would be required.
 
-Version: 1.0.1
-Build date: 2026-10-19
+Version: 1.2.0
+Build date: 2026-10-20
 Node runtime: 22.12.0 (license in runtime\NODE-LICENSE)
