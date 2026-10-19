@@ -68,12 +68,25 @@ The smoke suite exercises sign-in and session restore, task creation, search, co
 
 ## Deployment
 
-Cadence is a static single-page app. Deploy the contents of `dist/` to any static host that supports HTTPS and SPA fallback:
+Cadence is a static single-page app. Cloudflare Pages is the recommended free host: unlimited static requests and bandwidth, free HTTPS, and no card required. The build includes a `_headers` file that preserves the local-only Content Security Policy and cache behavior.
 
 1. Run `npm run build`.
-2. Publish `dist/`.
-3. Rewrite unknown paths to `index.html`.
-4. Serve over HTTPS so the service worker and PWA installation are enabled.
+2. In the Cloudflare dashboard, create a Pages project and upload the contents of `dist/`.
+3. Use a unique project name; the free URL will be `https://<project-name>.pages.dev`.
+4. Leave build settings empty for a direct upload, or connect the repository with build command `npm run build` and output directory `dist`.
+
+Alternatively, deploy from the CLI after signing in to Cloudflare:
+
+```bash
+npx wrangler@latest pages deploy dist --project-name cadence-workspace
+```
+
+For any static host:
+
+1. Publish `dist/`.
+2. Rewrite unknown paths to `index.html`.
+3. Serve over HTTPS so the service worker and PWA installation are enabled.
+4. Copy the security headers from `public/_headers` into the host's header configuration.
 
 Because routing is hash-based, deep links such as `/#/tasks` work without server rewrites, but the app shell itself still needs a fallback for non-root paths. Do not cache `sw.js` or `index.html` indefinitely; the generated service worker handles versioned app-shell caches. All data remains local to each browser, so there is no database or API to provision.
 
