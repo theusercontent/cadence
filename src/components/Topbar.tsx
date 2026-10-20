@@ -120,7 +120,7 @@ export function Topbar() {
               >
                 <LogOut size={16} /> Sign out
               </button>
-              <p className="user-menu-foot">Stored locally · Cadence 1.2</p>
+              <p className="user-menu-foot">Stored locally · Cadence 1.3</p>
             </div>
           )}
         </div>

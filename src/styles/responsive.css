@@ -361,6 +361,10 @@
     display: none;
   }
 
+  .task-row-meta .task-label.task-external-assignee {
+    display: inline-flex;
+  }
+
   .task-row-side .due-chip {
     height: 21px;
     padding: 0 5px;

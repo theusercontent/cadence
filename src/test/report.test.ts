@@ -51,6 +51,21 @@ describe('task CSV report', () => {
     expect(buildTaskReportCsv([complete], projects, users)).toContain(',3,3,100,')
   })
 
+  it('reports free-text assignee names when no workspace account is linked', () => {
+    const task = {
+      ...sharedTask,
+      id: 't-external',
+      title: 'Send vendor brief',
+      assigneeId: null,
+      assigneeName: 'Rowan "Row" Vale',
+    }
+
+    const csv = buildTaskReportCsv([task], projects, users)
+
+    expect(csv).toContain('"Rowan ""Row"" Vale"')
+    expect(csv).not.toContain('Unassigned')
+  })
+
   it('only includes tasks visible to the signed-in role', () => {
     const workspace = makeWorkspace()
     const viewerCsv = buildTaskReportCsv(

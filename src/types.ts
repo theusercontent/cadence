@@ -55,6 +55,7 @@ export interface Task {
   priority: TaskPriority
   projectId: string
   assigneeId: string | null
+  assigneeName: string | null
   creatorId: string
   dueDate: string | null
   labels: string[]
@@ -116,6 +117,7 @@ export interface TaskInput {
   priority?: TaskPriority
   projectId: string
   assigneeId?: string | null
+  assigneeName?: string | null
   dueDate?: string | null
   labels?: string[]
   subtasks?: Array<Pick<Subtask, 'title' | 'done'>>

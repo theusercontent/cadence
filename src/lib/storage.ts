@@ -54,7 +54,10 @@ export function isWorkspaceData(value: unknown): value is WorkspaceData {
     Boolean(candidate.settings) &&
     Boolean(candidate.memory) &&
     candidate.users.every((user) => Boolean(user?.id && user?.email && user?.role)) &&
-    candidate.tasks.every((task) => Boolean(task?.id && task?.title && task?.projectId))
+    candidate.tasks.every((task) =>
+      Boolean(task?.id && task?.title && task?.projectId) &&
+      (task.assigneeName == null || typeof task.assigneeName === 'string'),
+    )
   )
 }
 

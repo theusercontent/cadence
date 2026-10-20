@@ -21,6 +21,7 @@ import {
   visibleTasks,
 } from '../lib/permissions'
 import { formatDueDate, isOverdue, todayISO } from '../lib/dates'
+import { EXTERNAL_ASSIGNEE_TONE } from '../lib/assignees'
 import { cx, stepProgress } from '../lib/utils'
 import type { Task, TaskStatus } from '../types'
 import { STATUS_LABELS, STATUS_ORDER } from '../types'
@@ -58,9 +59,15 @@ export function BoardPage() {
       if (projectId !== 'all' && task.projectId !== projectId) return false
       if (!needle) return true
       const project = projectsMap.get(task.projectId)
-      return task.title.toLowerCase().includes(needle) || project?.name.toLowerCase().includes(needle) || task.labels.some((label) => label.toLowerCase().includes(needle))
+      const assignee = task.assigneeId ? userMap.get(task.assigneeId) : undefined
+      return (
+        task.title.toLowerCase().includes(needle) ||
+        project?.name.toLowerCase().includes(needle) ||
+        task.labels.some((label) => label.toLowerCase().includes(needle)) ||
+        (assignee?.name ?? task.assigneeName ?? '').toLowerCase().includes(needle)
+      )
     })
-  }, [data, user, scope, projectId, search, projectsMap])
+  }, [data, user, scope, projectId, search, projectsMap, userMap])
 
   const columns = useMemo(
     () =>
@@ -183,6 +190,7 @@ export function BoardPage() {
               {columnTasks.map((task) => {
                 const project = projectsMap.get(task.projectId)
                 const assignee = task.assigneeId ? userMap.get(task.assigneeId) : null
+                const externalAssignee = !assignee ? task.assigneeName?.trim() ?? '' : ''
                 const editable = canEditTask(user, task, project)
                 const overdue = isOverdue(task.dueDate, status === 'done')
                 const steps = stepProgress(task.subtasks)
@@ -210,7 +218,7 @@ export function BoardPage() {
                     }}
                     tabIndex={0}
                     role="button"
-                    aria-label={`${task.title}, ${STATUS_LABELS[task.status]}${editable ? ', draggable' : ''}`}
+                    aria-label={`${task.title}, ${STATUS_LABELS[task.status]}${externalAssignee ? `, assigned to ${externalAssignee}` : ''}${editable ? ', draggable' : ''}`}
                   >
                     <div className="kanban-card-top">
                       {project && (
@@ -244,6 +252,11 @@ export function BoardPage() {
                     )}
                     <div className="kanban-card-foot">
                       <div className="kanban-meta">
+                        {externalAssignee && (
+                          <span className="kanban-external-assignee" title={`${externalAssignee} · external owner`}>
+                            {externalAssignee}
+                          </span>
+                        )}
                         {task.dueDate && (
                           <span className={cx('due-chip due-chip-small', overdue && 'due-overdue')}>
                             <CalendarDays size={12} /> {formatDueDate(task.dueDate, status === 'done')}
@@ -254,7 +267,18 @@ export function BoardPage() {
                         <span className={cx('priority-inline', `priority-${task.priority}`)} title={`${task.priority} priority`}>
                           <span />
                         </span>
-                        {assignee ? <Avatar name={assignee.name} tone={assignee.tone} size="xs" /> : <span className="avatar avatar-xs avatar-empty">—</span>}
+                        {assignee ? (
+                          <Avatar name={assignee.name} tone={assignee.tone} size="xs" title={assignee.name} />
+                        ) : externalAssignee ? (
+                          <Avatar
+                            name={externalAssignee}
+                            tone={EXTERNAL_ASSIGNEE_TONE}
+                            size="xs"
+                            title={`${externalAssignee} · external owner`}
+                          />
+                        ) : (
+                          <span className="avatar avatar-xs avatar-empty" title="Unassigned" aria-label="Unassigned">—</span>
+                        )}
                       </div>
                     </div>
                   </article>

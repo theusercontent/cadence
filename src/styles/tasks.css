@@ -80,6 +80,13 @@
   transform: translateY(-50%);
 }
 
+.task-external-assignee {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-secondary);
+}
+
 .task-row-steps {
   display: flex;
   align-items: center;
@@ -674,6 +681,15 @@
   align-items: center;
   gap: 8px;
   min-width: 0;
+}
+
+.kanban-external-assignee {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-tertiary);
+  font-size: 9px;
 }
 
 .kanban-progress {

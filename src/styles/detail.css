@@ -36,6 +36,26 @@
   margin-left: auto;
   font-size: 10px;
   color: var(--text-tertiary);
+  min-width: 0;
+}
+
+.composer-assignee > span:nth-child(2) {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composer-assignee-tag {
+  flex: none;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--surface-muted);
+  color: var(--text-faint);
+  font-size: 8.5px;
+  font-style: normal;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 /* Project + member forms */
@@ -249,6 +269,12 @@
   padding-top: 0;
   padding-bottom: 0;
   background-color: var(--surface);
+}
+
+.detail-assignee-hint {
+  font-size: 9.5px;
+  line-height: 1.4;
+  color: var(--text-faint);
 }
 
 .detail-static {

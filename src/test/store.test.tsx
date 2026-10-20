@@ -74,6 +74,7 @@ describe('store task mutations', () => {
     expect(created.title).toBe('Prepare the design review')
     expect(created.creatorId).toBe('u-employee')
     expect(created.assigneeId).toBe('u-employee')
+    expect(created.assigneeName).toBeNull()
     expect(created.status).toBe('todo')
     expect(created.labels).toEqual(['Design', 'Review'])
     expect(created.order).toBe(5)
@@ -92,6 +93,38 @@ describe('store task mutations', () => {
       expect(stored?.tasks.find((task) => task.id === created.id)?.status).toBe('done')
       expect(stored?.activities[0].action).toBe('task.status')
     })
+  })
+
+  it('tracks an external assignee name without granting workspace access', async () => {
+    const { result } = await useEmployeeStore()
+    let created!: Task
+
+    act(() => {
+      created = result.current.createTask({
+        title: '  Send vendor brief  ',
+        projectId: 'p-design',
+        assigneeId: null,
+        assigneeName: '  Rowan Vale  ',
+      })
+    })
+
+    expect(created.assigneeId).toBeNull()
+    expect(created.assigneeName).toBe('Rowan Vale')
+
+    act(() => {
+      result.current.updateTask(created.id, { assigneeName: 'Rowan V.' })
+    })
+    const external = result.current.data.tasks.find((task) => task.id === created.id)!
+    expect(external.assigneeId).toBeNull()
+    expect(external.assigneeName).toBe('Rowan V.')
+    expect(result.current.data.activities[0].message).toContain('Rowan V.')
+
+    act(() => {
+      result.current.updateTask(created.id, { assigneeId: 'u-employee' })
+    })
+    const linked = result.current.data.tasks.find((task) => task.id === created.id)!
+    expect(linked.assigneeId).toBe('u-employee')
+    expect(linked.assigneeName).toBeNull()
   })
 
   it('updates subtasks and comments with activity history', async () => {
@@ -126,6 +159,9 @@ describe('store task mutations', () => {
       result.current.createTask({ title: 'Nope', projectId: 'p-shared' }),
     ).toThrow(/read-only/i)
     expect(() => result.current.updateTask('t-mine', { title: 'Nope' })).toThrow(
+      /permission/i,
+    )
+    expect(() => result.current.updateTask('t-mine', { assigneeName: 'Nope' })).toThrow(
       /permission/i,
     )
     expect(() => result.current.toggleTask('t-mine')).toThrow(/permission/i)

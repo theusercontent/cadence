@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { CalendarDays, ChevronRight } from 'lucide-react'
 import type { Project, Task, User } from '../types'
 import { formatDueDate, isOverdue } from '../lib/dates'
+import { EXTERNAL_ASSIGNEE_TONE } from '../lib/assignees'
 import { cx, stepProgress } from '../lib/utils'
 import { Avatar, CheckToggle, ProgressBar, ProjectChip } from './ui'
 
@@ -50,6 +51,7 @@ export function TaskRow({
   const done = task.status === 'done'
   const overdue = isOverdue(task.dueDate, done)
   const steps = stepProgress(task.subtasks)
+  const externalAssignee = !assignee ? task.assigneeName?.trim() ?? '' : ''
   return (
     <article
       className={cx('task-row', done && 'is-completed', compact && 'task-row-compact')}
@@ -63,13 +65,18 @@ export function TaskRow({
       }}
       tabIndex={0}
       role="button"
-      aria-label={`${task.title}${done ? ', completed' : ''}`}
+      aria-label={`${task.title}${done ? ', completed' : ''}${externalAssignee ? `, assigned to ${externalAssignee}` : ''}`}
     >
       <CheckToggle done={done} onToggle={onToggle} disabled={!canEdit} label={task.title} />
       <div className="task-row-copy">
         <span className="task-row-title">{task.title}</span>
         <span className="task-row-meta">
           {showProject && project && <ProjectChip project={project} />}
+          {externalAssignee && (
+            <span className="task-label task-external-assignee" title={`${externalAssignee} · external owner`}>
+              {externalAssignee}
+            </span>
+          )}
           {task.labels.slice(0, compact ? 1 : 2).map((label) => (
             <span className="task-label" key={label}>{label}</span>
           ))}
@@ -100,6 +107,13 @@ export function TaskRow({
         </span>
         {assignee ? (
           <Avatar name={assignee.name} tone={assignee.tone} size="xs" title={assignee.name} />
+        ) : externalAssignee ? (
+          <Avatar
+            name={externalAssignee}
+            tone={EXTERNAL_ASSIGNEE_TONE}
+            size="xs"
+            title={`${externalAssignee} · external owner`}
+          />
         ) : (
           <span className="avatar avatar-xs avatar-empty" title="Unassigned" aria-label="Unassigned">—</span>
         )}

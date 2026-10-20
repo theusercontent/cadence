@@ -92,14 +92,16 @@ export function TasksPage() {
       if (priority !== 'all' && task.priority !== priority) return false
       if (!needle) return true
       const project = projectMap.get(task.projectId)
+      const assignee = task.assigneeId ? userMap.get(task.assigneeId) : undefined
       return (
         task.title.toLowerCase().includes(needle) ||
         task.description.toLowerCase().includes(needle) ||
         task.labels.some((label) => label.toLowerCase().includes(needle)) ||
-        project?.name.toLowerCase().includes(needle)
+        project?.name.toLowerCase().includes(needle) ||
+        (assignee?.name ?? task.assigneeName ?? '').toLowerCase().includes(needle)
       )
     })
-  }, [scopedTasks, projectId, priority, search, projectMap])
+  }, [scopedTasks, projectId, priority, search, projectMap, userMap])
 
   const counts = useMemo(() => {
     const open = baseTasks.filter((task) => task.status !== 'done')

@@ -823,6 +823,7 @@ function buildTasks(): Task[] {
       priority: seed.priority,
       projectId: seed.projectId,
       assigneeId: seed.assigneeId,
+      assigneeName: null,
       creatorId: seed.creatorId,
       dueDate: seed.dueDate,
       labels: seed.labels,

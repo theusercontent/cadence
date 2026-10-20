@@ -8,7 +8,7 @@
 
 No backend. No cloud account. No telemetry. The whole workspace lives in your browser and never leaves the device.
 
-[**Download for Windows**](https://github.com/theusercontent/cadence/releases/download/v1.2.0/Cadence-Offline-v1.2.0-Windows.zip) ·
+[**Download for Windows**](https://github.com/theusercontent/cadence/releases/download/v1.3.0/Cadence-Offline-v1.3.0-Windows.zip) ·
 [Run locally](#quick-start) ·
 [Take the tour](#a-quick-tour)
 
@@ -24,6 +24,7 @@ Most task managers begin with an account and a server. Cadence begins with the w
 
 - **Offline by construction** — no API, no database, no analytics. A generated service worker caches the app shell, so a reload without a connection still opens your workspace.
 - **Step progress you can see** — break a task into steps and completion fills the bar on task rows, board cards, calendar day panels, and the task sheet.
+- **Owners beyond the roster** — assign work to a teammate or type any external name. Linked teammates keep their permissions; external owners stay visible in lists, search, and reports.
 - **Roles with real boundaries** — admin, manager, employee, and viewer permissions are enforced in the UI and in the store, not just hidden with CSS.
 - **Memory that helps** — restores your session, last route, last task, recent searches, sign-in history, theme, and workspace activity.
 - **Quietly fast** — command palette, keyboard shortcuts, instant local writes, and hash-based routes with no round trips.
@@ -35,11 +36,17 @@ Every task can carry a small checklist. Cadence turns that checklist into readab
 
 ![Task steps with a 2 of 3 progress bar](docs/screenshots/task-steps.jpg)
 
+## Owners beyond the roster
+
+The assignee field is a name, not a locked dropdown. Start typing to pick an active teammate, or enter any other name for a contractor, vendor, or stakeholder. Matching teammates stay linked and keep their normal permissions and “assigned to me” counts. External owners are labels on the task: they appear in task rows, board cards, the calendar, search, and the CSV report, but they do not receive a Cadence login or workspace access.
+
+![Task composer with an external assignee name](docs/screenshots/assignee.jpg)
+
 ## Reports and backups
 
 Open **Settings → Local data** for two local-only exports:
 
-- **Task report (CSV)** — a spreadsheet-ready summary of every task you can see, including project, status, priority, owner, due date, labels, and step progress. It follows the same role boundaries as the rest of Cadence.
+- **Task report (CSV)** — a spreadsheet-ready summary of every task you can see, including project, status, priority, owner (linked teammate or external name), due date, labels, and step progress. It follows the same role boundaries as the rest of Cadence.
 - **Full workspace backup (JSON)** — an admin-only snapshot of the complete workspace for restore or migration.
 
 ![Settings Local data with a CSV task report and JSON workspace backup](docs/screenshots/reports.jpg)
@@ -64,17 +71,17 @@ Both files download through the browser. Nothing is uploaded, and the report inc
 
 The release ZIP is self-contained: it bundles a portable Node.js runtime, the prebuilt app, `run.bat`, and a license. There is no installer, no account, no administrator access, and no internet connection required.
 
-**New in v1.2.0:** Settings → Local data now includes a role-scoped CSV task report alongside the existing admin-only JSON workspace backup.
+**New in v1.3.0:** Task creation and the task sheet now accept a free-text assignee name. Exact teammate matches stay linked; any other name becomes a visible external owner in task rows, board cards, calendar, search, and the CSV report.
 
-1. [Download `Cadence-Offline-v1.2.0-Windows.zip`](https://github.com/theusercontent/cadence/releases/download/v1.2.0/Cadence-Offline-v1.2.0-Windows.zip) (30.5 MB).
+1. [Download `Cadence-Offline-v1.3.0-Windows.zip`](https://github.com/theusercontent/cadence/releases/download/v1.3.0/Cadence-Offline-v1.3.0-Windows.zip) (30.5 MB).
 2. Extract the folder anywhere.
 3. Double-click `run.bat` and open the local URL it prints.
 
 ```text
-SHA-256  61a3571cf0dd8717c5abf94c46144d5f473c17d479e04b217f765cd1565e881b
+SHA-256  df420a6b9231cbc3b2ba41992b013b0ace22da48a0841496b1fd17d52950df58
 ```
 
-The checksum is also attached to the [v1.2.0 release](https://github.com/theusercontent/cadence/releases/tag/v1.2.0) and archived on the [`release/v1.2.0` branch](https://github.com/theusercontent/cadence/tree/release/v1.2.0/releases). Versioned ZIPs live on `release/*` branches so `main` stays source-only; release branches are never merged.
+The checksum is also attached to the [v1.3.0 release](https://github.com/theusercontent/cadence/releases/tag/v1.3.0) and archived on the [`release/v1.3.0` branch](https://github.com/theusercontent/cadence/tree/release/v1.3.0/releases). Versioned ZIPs live on `release/*` branches so `main` stays source-only; release branches are never merged.
 
 ## Demo accounts
 

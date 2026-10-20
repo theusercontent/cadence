@@ -271,6 +271,7 @@ export function CalendarPage() {
               selectedTasks.map((task) => {
                 const project = projectMap.get(task.projectId)
                 const assignee = task.assigneeId ? userMap.get(task.assigneeId) : null
+                const owner = assignee?.name ?? task.assigneeName
                 const steps = stepProgress(task.subtasks)
                 return (
                   <article
@@ -297,7 +298,7 @@ export function CalendarPage() {
                       <span>{task.title}</span>
                       <small>
                         {project?.name}
-                        {assignee ? ` · ${assignee.name.split(' ')[0]}` : ''}
+                        {owner ? ` · ${owner.split(' ')[0]}` : ''}
                       </small>
                       {steps.total > 0 && (
                         <div className="day-task-progress">

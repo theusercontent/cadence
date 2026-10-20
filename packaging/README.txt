@@ -1,4 +1,4 @@
-CADENCE 1.2 - OFFLINE EDITION
+CADENCE 1.3 - OFFLINE EDITION
 =============================
 
 A calm, local-first task manager for focused teams.
@@ -71,6 +71,17 @@ Backups contain the complete workspace, including password hashes. Keep them pri
 Restore with Settings > Local data > Restore backup, or reset the sample workspace
 from the same section.
 
+ASSIGNEES
+---------
+The assignee field accepts a name. Start typing to choose an active teammate, or type
+any other name for a contractor, vendor, or stakeholder.
+
+- A matching teammate stays linked, with their normal role and project access.
+- Any other name is saved as an external owner on the task. External owners show up
+  in task lists, board cards, the calendar, search, and the CSV report, but they do
+  not receive a Cadence login or access to the workspace.
+- Clear the assignee field and leave it to mark a task unassigned.
+
 INSTALL AS AN APP
 -----------------
 Open Cadence in Chrome or Edge, then use the install icon in the address bar or
@@ -113,6 +124,6 @@ its own independent workspace. This edition does not synchronize data between de
 For shared team data across devices, a secure cloud database and server-side accounts
 would be required.
 
-Version: 1.2.0
+Version: 1.3.0
 Build date: 2026-10-20
 Node runtime: 22.12.0 (license in runtime\NODE-LICENSE)

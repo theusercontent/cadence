@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import {
   CalendarDays,
   Check,
@@ -26,6 +26,12 @@ import {
   canViewProject,
 } from '../lib/permissions'
 import { formatDateTime, formatDueDate, isOverdue, todayISO } from '../lib/dates'
+import {
+  ASSIGNEE_NAME_LIMIT,
+  assigneeDisplayName,
+  matchTeammate,
+  resolveAssignee,
+} from '../lib/assignees'
 import { cx } from '../lib/utils'
 import type { TaskPriority, TaskStatus } from '../types'
 import { PRIORITY_LABELS, STATUS_LABELS } from '../types'
@@ -53,7 +59,9 @@ export function TaskDetail() {
   const [subtaskDraft, setSubtaskDraft] = useState('')
   const [labelDraft, setLabelDraft] = useState('')
   const [commentDraft, setCommentDraft] = useState('')
+  const [assigneeDraft, setAssigneeDraft] = useState('')
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const skipAssigneeSave = useRef(false)
 
   useEffect(() => {
     if (!task) return
@@ -62,7 +70,9 @@ export function TaskDetail() {
     setSubtaskDraft('')
     setLabelDraft('')
     setCommentDraft('')
+    setAssigneeDraft('')
     setConfirmDelete(false)
+    skipAssigneeSave.current = false
     rememberTask(task.id)
     // Only reset the editable fields when a different task is opened.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,6 +93,18 @@ export function TaskDetail() {
     () => data.projects.filter((item) => canViewProject(user, item)),
     [data.projects, user],
   )
+  const assigneeLabel = task ? assigneeDisplayName(task, data.users) : ''
+  const linkedAssignee = task?.assigneeId ? authorMap.get(task.assigneeId) : undefined
+  const matchedAssignee =
+    matchTeammate(assigneeDraft, assignees) ??
+    (linkedAssignee &&
+    assigneeDraft.trim().toLocaleLowerCase() === linkedAssignee.name.trim().toLocaleLowerCase()
+      ? linkedAssignee
+      : undefined)
+
+  useEffect(() => {
+    setAssigneeDraft(assigneeLabel)
+  }, [assigneeLabel, task?.id])
 
   if (!task || !project) return null
 
@@ -124,6 +146,25 @@ export function TaskDetail() {
       updateTask(task.id, { priority })
     } catch (error) {
       notify(error instanceof Error ? error.message : 'Could not update the task.', 'error')
+    }
+  }
+
+  const saveAssignee = () => {
+    if (skipAssigneeSave.current) {
+      skipAssigneeSave.current = false
+      return
+    }
+    if (!canAssign) return
+    const next = assigneeDraft.trim()
+    if (next.toLocaleLowerCase() === assigneeLabel.trim().toLocaleLowerCase()) {
+      setAssigneeDraft(assigneeLabel)
+      return
+    }
+    try {
+      updateTask(task.id, resolveAssignee(next, assignees))
+    } catch (error) {
+      setAssigneeDraft(assigneeLabel)
+      notify(error instanceof Error ? error.message : 'Could not reassign the task.', 'error')
     }
   }
 
@@ -190,7 +231,6 @@ export function TaskDetail() {
   const subtaskPct = task.subtasks.length ? Math.round((doneSubtasks / task.subtasks.length) * 100) : 0
   const overdue = isOverdue(task.dueDate, task.status === 'done')
   const creator = authorMap.get(task.creatorId)
-  const assignee = task.assigneeId ? authorMap.get(task.assigneeId) : null
 
   return (
     <>
@@ -243,23 +283,40 @@ export function TaskDetail() {
           <div className="task-detail-meta">
             <div className="detail-field">
               <span className="detail-label"><UserRound size={14} /> Assignee</span>
-              <select
-                value={task.assigneeId ?? ''}
-                onChange={(event) => {
-                  const value = event.target.value || null
-                  try {
-                    updateTask(task.id, { assigneeId: value })
-                  } catch (error) {
-                    notify(error instanceof Error ? error.message : 'Could not reassign the task.', 'error')
+              <input
+                list="detail-assignee-names"
+                value={assigneeDraft}
+                onChange={(event) => setAssigneeDraft(event.target.value)}
+                onBlur={saveAssignee}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault()
+                    event.currentTarget.blur()
+                  }
+                  if (event.key === 'Escape') {
+                    skipAssigneeSave.current = true
+                    setAssigneeDraft(assigneeLabel)
+                    event.currentTarget.blur()
                   }
                 }}
+                placeholder="Type a teammate or any name"
+                maxLength={ASSIGNEE_NAME_LIMIT}
                 disabled={!canAssign}
-              >
-                <option value="">Unassigned</option>
+                aria-label="Assignee"
+                aria-describedby={
+                  assigneeDraft.trim() && !matchedAssignee ? 'detail-assignee-hint' : undefined
+                }
+              />
+              <datalist id="detail-assignee-names">
                 {assignees.map((person) => (
-                  <option key={person.id} value={person.id}>{person.name}</option>
+                  <option key={person.id} value={person.name} />
                 ))}
-              </select>
+              </datalist>
+              {assigneeDraft.trim() && !matchedAssignee && (
+                <span className="detail-assignee-hint" id="detail-assignee-hint">
+                  External owner · no Cadence access
+                </span>
+              )}
             </div>
             <div className="detail-field">
               <span className="detail-label"><CalendarDays size={14} /> Due date</span>

@@ -24,6 +24,7 @@ import {
   visibleTasks,
 } from '../lib/permissions'
 import { formatDueDate } from '../lib/dates'
+import { assigneeDisplayName } from '../lib/assignees'
 import { isTypingTarget } from '../lib/utils'
 
 type ItemType = 'task' | 'project' | 'person' | 'action'
@@ -74,7 +75,8 @@ export function CommandPalette() {
         return (
           task.title.toLowerCase().includes(needle) ||
           task.labels.some((label) => label.toLowerCase().includes(needle)) ||
-          project?.name.toLowerCase().includes(needle)
+          project?.name.toLowerCase().includes(needle) ||
+          assigneeDisplayName(task, data.users).toLowerCase().includes(needle)
         )
       })
       .slice(0, 6)

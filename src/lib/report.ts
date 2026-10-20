@@ -67,6 +67,7 @@ export function buildTaskReportCsv(
   const rows = sorted.map((task) => {
     const project = projectById.get(task.projectId)
     const assignee = task.assigneeId ? userById.get(task.assigneeId) : undefined
+    const assigneeName = assignee?.name ?? task.assigneeName?.trim()
     const creator = userById.get(task.creatorId)
     const progress = stepProgress(task.subtasks)
 
@@ -75,7 +76,7 @@ export function buildTaskReportCsv(
       project?.name ?? 'Unknown project',
       STATUS_LABELS[task.status],
       PRIORITY_LABELS[task.priority],
-      assignee?.name ?? 'Unassigned',
+      assigneeName || 'Unassigned',
       creator?.name ?? 'Unknown',
       task.dueDate ?? '',
       task.labels.join('; '),

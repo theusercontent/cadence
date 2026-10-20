@@ -61,6 +61,7 @@ import {
   visibleTasks,
 } from '../lib/permissions'
 import { buildTaskReportCsv } from '../lib/report'
+import { normalizeAssigneeName } from '../lib/assignees'
 import { downloadCsv, downloadJson, initials, uid } from '../lib/utils'
 import { BootScreen } from '../components/BootScreen'
 
@@ -79,6 +80,7 @@ export interface TaskPatch {
   priority?: Task['priority']
   projectId?: string
   assigneeId?: string | null
+  assigneeName?: string | null
   dueDate?: string | null
   labels?: string[]
 }
@@ -415,11 +417,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     if (!title) throw new Error('Give the task a title.')
     const project = getProject(input.projectId, workspace)
     if (!canViewProject(actor, project)) throw new Error('You do not have access to that project.')
-    const assigneeId = validateAssignable(
-      input.assigneeId === undefined ? actor.id : input.assigneeId,
-      project,
-      workspace,
-    )
+    const requestedAssigneeId = input.assigneeId === undefined
+      ? (input.assigneeName?.trim() ? null : actor.id)
+      : input.assigneeId
+    const assigneeId = validateAssignable(requestedAssigneeId, project, workspace)
+    const assigneeName = assigneeId ? null : normalizeAssigneeName(input.assigneeName)
     const dueDate = input.dueDate ?? null
     if (dueDate && !isIsoDate(dueDate)) throw new Error('Choose a valid due date.')
     const now = new Date().toISOString()
@@ -432,6 +434,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       priority: input.priority ?? 'medium',
       projectId: project.id,
       assigneeId,
+      assigneeName,
       creatorId: actor.id,
       dueDate,
       labels: (input.labels ?? []).map((label) => label.trim()).filter(Boolean),
@@ -469,7 +472,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     const project = projectForTask(task, workspace)
     if (!canEditTask(actor, task, project)) throw new Error('You do not have permission to edit this task.')
     if (!canEditTask(actor, task, project) || !isWriter(actor)) throw new Error('You have read-only access.')
-    if (patch.assigneeId !== undefined && project && !canAssignTask(actor, task, project)) {
+    const assignmentChangedInPatch = patch.assigneeId !== undefined || patch.assigneeName !== undefined
+    if (assignmentChangedInPatch && project && !canAssignTask(actor, task, project)) {
       throw new Error('Only the creator, project lead, or a manager can reassign this task.')
     }
     if (patch.projectId !== undefined && project && !canAssignTask(actor, task, project)) {
@@ -481,9 +485,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     const nextProject = patch.projectId ? getProject(patch.projectId, workspace) : project
     if (!nextProject) throw new Error('That project no longer exists.')
     if (!canViewProject(actor, nextProject)) throw new Error('You do not have access to that project.')
-    if (patch.assigneeId !== undefined) {
-      validateAssignable(patch.assigneeId, nextProject, workspace)
-    }
+    const nextAssigneeId = patch.assigneeId !== undefined
+      ? validateAssignable(patch.assigneeId, nextProject, workspace)
+      : patch.assigneeName !== undefined
+        ? null
+        : task.assigneeId
+    const nextAssigneeName = nextAssigneeId
+      ? null
+      : patch.assigneeName !== undefined
+        ? normalizeAssigneeName(patch.assigneeName)
+        : patch.assigneeId !== undefined
+          ? null
+          : task.assigneeName ?? null
 
     const wasDone = task.status === 'done'
     const nextStatus = patch.status ?? task.status
@@ -494,17 +507,25 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       title: patch.title?.trim() ?? task.title,
       description: patch.description?.trim() ?? patch.description ?? task.description,
       labels: patch.labels ?? task.labels,
+      assigneeId: nextAssigneeId,
+      assigneeName: nextAssigneeName,
       updatedAt: now,
       completedAt: nextStatus === 'done' ? (wasDone ? task.completedAt ?? now : now) : null,
     }
 
+    const assignmentChanged =
+      nextAssigneeId !== task.assigneeId ||
+      nextAssigneeName !== (task.assigneeName ?? null)
     let message = `updated “${updated.title}”`
     if (patch.status && patch.status !== task.status) {
       message = `moved “${updated.title}” to ${STATUS_LABELS[patch.status]}`
-    } else if (patch.assigneeId !== undefined && patch.assigneeId !== task.assigneeId) {
-      const assignee = workspace.users.find((user) => user.id === patch.assigneeId)
-      message = assignee
-        ? `assigned “${updated.title}” to ${assignee.name}`
+    } else if (assignmentChanged) {
+      const assignee = nextAssigneeId
+        ? workspace.users.find((user) => user.id === nextAssigneeId)
+        : undefined
+      const owner = assignee?.name ?? nextAssigneeName
+      message = owner
+        ? `assigned “${updated.title}” to ${owner}`
         : `unassigned “${updated.title}”`
     } else if (patch.projectId && patch.projectId !== task.projectId) {
       message = `moved “${updated.title}” to ${nextProject.name}`

@@ -122,6 +122,7 @@ function makeTask(overrides: Partial<Task> & Pick<Task, 'id' | 'title' | 'projec
     status: 'todo',
     priority: 'medium',
     assigneeId: null,
+    assigneeName: null,
     creatorId: managerUser.id,
     dueDate: null,
     labels: [],

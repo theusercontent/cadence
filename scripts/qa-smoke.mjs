@@ -146,7 +146,10 @@ async function fillField(label, value, root = '.overlay-panel') {
     await element.select(value)
     return
   }
-  await element.click({ clickCount: 3 })
+  await element.click()
+  await element.evaluate((node) => {
+    if (node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement) node.select()
+  })
   await page.keyboard.press('Backspace')
   await page.keyboard.type(value)
 }
@@ -261,6 +264,8 @@ async function main() {
     await page.waitForSelector('.overlay-panel')
     assert((await textOf('.overlay-header h2')) === 'New task', 'Task composer did not open')
     await page.type('.task-title-field', QA_TASK)
+    await fillField('Assignee', 'QA External Owner')
+    await screenshot('03a-composer-external-assignee.png')
     await fillField('Priority', 'high')
     await fillField('Labels', 'QA, Smoke')
     await clickText('.quick-date-row .chip-button', 'Today')
@@ -268,6 +273,21 @@ async function main() {
     await page.waitForSelector('.task-detail', { timeout: 10000 })
     const titleInput = await page.$eval('[aria-label="Task title"]', (element) => element.value)
     assert(titleInput === QA_TASK, 'Task detail did not open for the new task')
+    const createdTask = (await readWorkspace()).tasks.find((item) => item.title === QA_TASK)
+    assert(
+      createdTask?.assigneeName === 'QA External Owner' && createdTask.assigneeId === null,
+      'The free-text assignee name was not saved as an external owner',
+    )
+    await fillField('Assignee', 'QA External Lead')
+    await page.keyboard.press('Enter')
+    await page.waitForFunction(
+      () =>
+        JSON.parse(localStorage.getItem('cadence.workspace.v1')).tasks.find(
+          (item) => item.title === 'QA · Admin smoke task',
+        )?.assigneeName === 'QA External Lead',
+      { timeout: 10000 },
+    )
+    note('Created and edited a task with an external owner name')
 
     await page.type('[aria-label="Add a step"]', 'Verify local persistence')
     await page.keyboard.press('Enter')
@@ -308,6 +328,11 @@ async function main() {
       'Task row progress did not reflect the completed step',
     )
     note('Task row progress matched the completed step')
+    const externalOwner = await page.$eval(
+      `.task-row[aria-label^="${QA_TASK}"] .task-external-assignee`,
+      (node) => node.textContent.trim(),
+    )
+    assert(externalOwner === 'QA External Lead', 'Task row did not show the external owner name')
     await page.click(`.task-row[aria-label^="${QA_TASK}"]`)
     await page.waitForSelector('.task-detail')
     await fillField('Status', 'done')
@@ -564,6 +589,7 @@ async function main() {
       'Task report header is incomplete',
     )
     assert(csv.includes(QA_TASK), 'Task report does not contain the workspace task')
+    assert(csv.includes('QA External Lead'), 'Task report does not contain the external owner name')
     assert(csv.includes(',1,1,100,'), 'Task report does not contain step progress')
     note(`Task report downloaded and validated (${csvDownloaded})`)
 

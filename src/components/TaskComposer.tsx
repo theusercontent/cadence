@@ -4,6 +4,12 @@ import { useStore } from '../store/store'
 import { useAppUI } from '../ui/AppUI'
 import { Avatar, Overlay } from './ui'
 import { canCreateTask, canViewProject, visibleProjects } from '../lib/permissions'
+import {
+  ASSIGNEE_NAME_LIMIT,
+  EXTERNAL_ASSIGNEE_TONE,
+  matchTeammate,
+  resolveAssignee,
+} from '../lib/assignees'
 import { todayISO } from '../lib/dates'
 import type { TaskPriority, TaskStatus } from '../types'
 import { PRIORITY_LABELS, STATUS_LABELS } from '../types'
@@ -16,7 +22,7 @@ export function TaskComposer() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [projectId, setProjectId] = useState('')
-  const [assigneeId, setAssigneeId] = useState('')
+  const [assignee, setAssignee] = useState('')
   const [dueDate, setDueDate] = useState('')
   const [priority, setPriority] = useState<TaskPriority>('medium')
   const [status, setStatus] = useState<TaskStatus>('todo')
@@ -39,7 +45,7 @@ export function TaskComposer() {
     setTitle('')
     setDescription('')
     setProjectId(defaultProject?.id ?? '')
-    setAssigneeId(defaultAssignee?.id ?? '')
+    setAssignee(defaultAssignee?.name ?? '')
     setDueDate(composerDefaults?.dueDate ?? '')
     setPriority('medium')
     setStatus(composerDefaults?.status ?? 'todo')
@@ -53,16 +59,18 @@ export function TaskComposer() {
   const assignees = data.users.filter(
     (person) => person.active && selectedProject && canViewProject(person, selectedProject),
   )
+  const matchedAssignee = matchTeammate(assignee, assignees)
 
   const submit = (event: FormEvent) => {
     event.preventDefault()
     setError('')
     try {
+      const assignment = resolveAssignee(assignee, assignees)
       const task = createTask({
         title,
         description,
         projectId,
-        assigneeId: assigneeId || null,
+        ...assignment,
         dueDate: dueDate || null,
         priority,
         status,
@@ -122,7 +130,7 @@ export function TaskComposer() {
               const nextProject = projects.find((project) => project.id === event.target.value)
               setProjectId(event.target.value)
               const nextCandidates = data.users.filter((person) => person.active && nextProject && canViewProject(person, nextProject))
-              setAssigneeId(nextCandidates.find((person) => person.id === user.id)?.id ?? nextCandidates[0]?.id ?? '')
+              setAssignee(nextCandidates.find((person) => person.id === user.id)?.name ?? nextCandidates[0]?.name ?? '')
             }}>
               {projects.map((project) => (
                 <option key={project.id} value={project.id}>{project.name}</option>
@@ -131,12 +139,22 @@ export function TaskComposer() {
           </label>
           <label className="field">
             <span className="field-label">Assignee</span>
-            <select value={assigneeId} onChange={(event) => setAssigneeId(event.target.value)}>
-              <option value="">Unassigned</option>
+            <input
+              value={assignee}
+              onChange={(event) => setAssignee(event.target.value)}
+              placeholder="Type a teammate or any name"
+              list="composer-assignee-names"
+              maxLength={ASSIGNEE_NAME_LIMIT}
+              aria-describedby="composer-assignee-hint"
+            />
+            <datalist id="composer-assignee-names">
               {assignees.map((person) => (
-                <option key={person.id} value={person.id}>{person.name}</option>
+                <option key={person.id} value={person.name} />
               ))}
-            </select>
+            </datalist>
+            <span className="field-hint" id="composer-assignee-hint">
+              Teammates stay linked. Any other name is saved as an external owner.
+            </span>
           </label>
         </div>
 
@@ -192,10 +210,18 @@ export function TaskComposer() {
             setDueDate(date.toISOString().slice(0, 10))
           }}>Tomorrow</button>
           <button type="button" className="chip chip-button" onClick={() => setDueDate('')}>No date</button>
-          {assigneeId && (
-            <span className="composer-assignee">
-              <Avatar name={assignees.find((person) => person.id === assigneeId)?.name ?? ''} tone={assignees.find((person) => person.id === assigneeId)?.tone ?? '#888'} size="xs" />
-              <span>{assignees.find((person) => person.id === assigneeId)?.name}</span>
+          {assignee.trim() && (
+            <span
+              className="composer-assignee"
+              title={matchedAssignee ? `${matchedAssignee.name} · linked teammate` : `${assignee.trim()} · external owner`}
+            >
+              <Avatar
+                name={assignee.trim()}
+                tone={matchedAssignee?.tone ?? EXTERNAL_ASSIGNEE_TONE}
+                size="xs"
+              />
+              <span>{assignee.trim()}</span>
+              {!matchedAssignee && <span className="composer-assignee-tag">External</span>}
             </span>
           )}
         </div>
