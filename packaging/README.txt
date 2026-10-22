@@ -1,4 +1,4 @@
-CADENCE 1.3 - OFFLINE EDITION
+CADENCE 1.4 - OFFLINE EDITION
 =============================
 
 A calm, local-first task manager for focused teams.
@@ -59,14 +59,17 @@ This means:
 
 REPORTS AND BACKUPS
 -------------------
-Settings > Local data offers two downloads:
+Memory > Export my data downloads a personal JSON copy of the work you can see,
+your settings, local recall, and saved Weekly Cadences.
+
+Settings > Local data offers two more downloads:
 - Task report (CSV): a role-scoped summary of every task you can see, with project,
   status, priority, owner, dates, labels, and step progress. Opens in Excel, Numbers,
   or Google Sheets.
 - Full workspace backup (JSON): an admin-only snapshot of the complete workspace for
   restore or migration.
 
-Both files download through the browser. The CSV report includes no credentials.
+All files download through the browser. The CSV report includes no credentials.
 Backups contain the complete workspace, including password hashes. Keep them private.
 Restore with Settings > Local data > Restore backup, or reset the sample workspace
 from the same section.
@@ -81,6 +84,22 @@ any other name for a contractor, vendor, or stakeholder.
   in task lists, board cards, the calendar, search, and the CSV report, but they do
   not receive a Cadence login or access to the workspace.
 - Clear the assignee field and leave it to mark a task unassigned.
+
+THE WEEKLY CADENCE
+------------------
+Open Weekly Cadence in the sidebar for a quiet weekly review. It follows the same
+role boundaries as the rest of Cadence: employees review their own work, managers
+review the work they can see, and admins review the workspace.
+
+The ritual looks back at what moved, notices overdue, quiet, and unowned work, and
+helps you choose up to three priorities for next week. Add a short intention if you
+want one, then close the week.
+
+- One Cadence is kept per person per week.
+- Priorities are limited to three, with room to search larger workspaces.
+- The latest intention appears in Memory.
+- Everything is saved in the browser, alongside the rest of the workspace.
+- Closing a Cadence does not change task status or anyone else's review.
 
 INSTALL AS AN APP
 -----------------
@@ -124,6 +143,6 @@ its own independent workspace. This edition does not synchronize data between de
 For shared team data across devices, a secure cloud database and server-side accounts
 would be required.
 
-Version: 1.3.0
-Build date: 2026-10-20
+Version: 1.4.0
+Build date: 2026-10-23
 Node runtime: 22.12.0 (license in runtime\NODE-LICENSE)

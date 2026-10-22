@@ -21,6 +21,8 @@ import type {
   User,
   UserInput,
   UserSettings,
+  WeeklyReview,
+  WeeklyReviewInput,
   WorkspaceData,
 } from '../types'
 import { STATUS_LABELS } from '../types'
@@ -39,6 +41,7 @@ import {
   DATA_VERSION,
   isWorkspaceData,
   loadOrCreateData,
+  normalizeWorkspaceData,
   saveStoredData,
 } from '../lib/storage'
 import { DEMO_ACCOUNTS, buildSeedData } from '../data/seed'
@@ -62,6 +65,12 @@ import {
 } from '../lib/permissions'
 import { buildTaskReportCsv } from '../lib/report'
 import { normalizeAssigneeName } from '../lib/assignees'
+import {
+  buildWeeklyReviewSnapshot,
+  normalizeWeeklyReviewInput,
+  reviewScopeTasks,
+  weekRangeFrom,
+} from '../lib/review'
 import { downloadCsv, downloadJson, initials, uid } from '../lib/utils'
 import { BootScreen } from '../components/BootScreen'
 
@@ -126,6 +135,7 @@ export interface StoreValue {
   changePassword: (currentPassword: string, nextPassword: string) => Promise<void>
   updateProfile: (patch: Pick<User, 'name' | 'title' | 'tone'>) => void
   updateSettings: (patch: Partial<UserSettings>) => void
+  saveWeeklyReview: (input: WeeklyReviewInput) => WeeklyReview
   rememberTask: (taskId: string) => void
   rememberSearch: (term: string) => void
   clearRecentSearches: () => void
@@ -144,7 +154,7 @@ function readRoute(): string {
   return raw.split('?')[0]
 }
 
-const KNOWN_ROUTES = ['/overview', '/tasks', '/board', '/calendar', '/projects', '/team', '/memory', '/settings']
+const KNOWN_ROUTES = ['/overview', '/tasks', '/board', '/calendar', '/projects', '/team', '/memory', '/review', '/settings']
 
 function knownRoute(path: string): boolean {
   return KNOWN_ROUTES.includes(path) || path.startsWith('/projects/')
@@ -942,6 +952,46 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     notify('Preferences saved.')
   }
 
+  const saveWeeklyReview = (input: WeeklyReviewInput): WeeklyReview => {
+    const workspace = requireData()
+    const actor = requireUser()
+    const normalized = normalizeWeeklyReviewInput(input)
+    const scope = reviewScopeTasks(actor, workspace)
+    const visibleIds = new Set(scope.map((task) => task.id))
+    if (normalized.priorityIds.some((id) => !visibleIds.has(id))) {
+      throw new Error('One of those priorities is no longer in view.')
+    }
+    const range = weekRangeFrom(normalized.weekStart, normalized.weekEnd)
+    const snapshot = buildWeeklyReviewSnapshot(actor, workspace, range)
+    const existing = workspace.reviews.find(
+      (review) => review.userId === actor.id && review.weekStart === normalized.weekStart,
+    )
+    const review: WeeklyReview = {
+      id: existing?.id ?? uid('wr'),
+      userId: actor.id,
+      weekStart: normalized.weekStart,
+      weekEnd: normalized.weekEnd,
+      reviewedAt: new Date().toISOString(),
+      intention: normalized.intention,
+      priorityIds: normalized.priorityIds,
+      completedCount: snapshot.completed.length,
+      projectCount: snapshot.projectsMoved.length,
+      openCount: snapshot.open.length,
+    }
+    setData({
+      ...workspace,
+      reviews: existing
+        ? workspace.reviews.map((item) => (item.id === existing.id ? review : item))
+        : [review, ...workspace.reviews],
+    })
+    notify(
+      existing
+        ? 'Weekly Cadence updated.'
+        : 'Week closed. Your Cadence is saved to Memory.',
+    )
+    return review
+  }
+
   const rememberTask = (taskId: string): void => {
     const workspace = requireData()
     const actor = requireUser()
@@ -1026,6 +1076,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       },
       settings: workspace.settings[actor.id],
       memory: workspace.memory[actor.id],
+      reviews: workspace.reviews.filter((review) => review.userId === actor.id),
       people: workspace.users
         .filter((user) => personIds.has(user.id))
         .map((user) => ({ id: user.id, name: user.name, title: user.title, department: user.department })),
@@ -1046,7 +1097,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       if (candidate.version !== DATA_VERSION) {
         return { ok: false, error: 'This backup was created by a different version of Cadence.' }
       }
-      const imported = candidate as WorkspaceData
+      const imported = normalizeWorkspaceData(candidate)
+      if (!imported) return { ok: false, error: 'This backup could not be read.' }
       const nextUser = imported.users.find((user) => user.id === actor.id && user.active)
       const withNote: WorkspaceData = {
         ...imported,
@@ -1121,6 +1173,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     changePassword,
     updateProfile,
     updateSettings,
+    saveWeeklyReview,
     rememberTask,
     rememberSearch,
     clearRecentSearches,

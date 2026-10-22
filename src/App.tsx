@@ -18,6 +18,7 @@ import { ProjectsPage } from './pages/ProjectsPage'
 import { ProjectDetailPage } from './pages/ProjectDetailPage'
 import { TeamPage } from './pages/TeamPage'
 import { MemoryPage } from './pages/MemoryPage'
+import { WeeklyPage } from './pages/WeeklyPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { isTypingTarget } from './lib/utils'
 
@@ -29,6 +30,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/projects': 'Projects',
   '/team': 'Team',
   '/memory': 'Memory',
+  '/review': 'Weekly Cadence',
   '/settings': 'Settings',
 }
 
@@ -129,6 +131,7 @@ function AppShell() {
   else if (route.startsWith('/projects/')) page = <ProjectDetailPage />
   else if (route === '/team') page = <TeamPage />
   else if (route === '/memory') page = <MemoryPage />
+  else if (route === '/review') page = <WeeklyPage />
   else if (route === '/settings') page = <SettingsPage />
   else page = <NotFoundPage />
 

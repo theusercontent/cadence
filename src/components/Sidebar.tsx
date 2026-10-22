@@ -2,6 +2,7 @@ import {
   Brain,
   CalendarDays,
   Columns3,
+  Feather,
   FolderKanban,
   LayoutDashboard,
   ListTodo,
@@ -62,6 +63,7 @@ export function Sidebar() {
     {
       label: 'You',
       nav: [
+        { path: '/review', label: 'Weekly Cadence', icon: Feather },
         { path: '/memory', label: 'Memory', icon: Brain },
         { path: '/settings', label: 'Settings', icon: Settings2 },
       ],
@@ -142,7 +144,7 @@ export function Sidebar() {
             <span className={cx('sidebar-role-dot', `role-dot-${user.role}`)} title={user.role} />
           </div>
           <p className="sidebar-version">
-            Cadence 1.3 · {settings.theme === 'system' ? 'Auto theme' : `${settings.theme} theme`}
+            Cadence 1.4 · {settings.theme === 'system' ? 'Auto theme' : `${settings.theme} theme`}
           </p>
         </div>
       </aside>

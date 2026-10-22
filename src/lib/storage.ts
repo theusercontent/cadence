@@ -4,14 +4,17 @@ import { buildSeedData } from '../data/seed'
 export const DATA_KEY = 'cadence.workspace.v1'
 export const DATA_VERSION = 2
 
+export function normalizeWorkspaceData(value: unknown): WorkspaceData | null {
+  if (!isWorkspaceData(value)) return null
+  if (value.version !== DATA_VERSION) return null
+  return { ...value, reviews: value.reviews ?? [] }
+}
+
 export function readStoredData(): WorkspaceData | null {
   try {
     const raw = localStorage.getItem(DATA_KEY)
     if (!raw) return null
-    const parsed = JSON.parse(raw) as WorkspaceData
-    if (!isWorkspaceData(parsed)) return null
-    if (parsed.version !== DATA_VERSION) return null
-    return parsed
+    return normalizeWorkspaceData(JSON.parse(raw))
   } catch {
     return null
   }
@@ -53,6 +56,14 @@ export function isWorkspaceData(value: unknown): value is WorkspaceData {
     Array.isArray(candidate.activities) &&
     Boolean(candidate.settings) &&
     Boolean(candidate.memory) &&
+    (candidate.reviews === undefined ||
+      (Array.isArray(candidate.reviews) &&
+        candidate.reviews.every(
+          (review) =>
+            Boolean(review?.id && review?.userId && review?.weekStart && review?.weekEnd) &&
+            typeof review.intention === 'string' &&
+            Array.isArray(review.priorityIds),
+        ))) &&
     candidate.users.every((user) => Boolean(user?.id && user?.email && user?.role)) &&
     candidate.tasks.every((task) =>
       Boolean(task?.id && task?.title && task?.projectId) &&

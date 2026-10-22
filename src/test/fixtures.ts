@@ -213,6 +213,7 @@ export function makeWorkspace(overrides: Partial<WorkspaceData> = {}): Workspace
     activities,
     settings,
     memory,
+    reviews: [],
     ...overrides,
   }
 }

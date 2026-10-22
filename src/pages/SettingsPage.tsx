@@ -428,7 +428,7 @@ export function SettingsPage() {
 
           <section className="card settings-about">
             <span className="card-eyebrow">About</span>
-            <h2>Cadence 1.3</h2>
+            <h2>Cadence 1.4</h2>
             <p>Work, in focus.</p>
             <dl>
               <div><dt>Storage</dt><dd>Browser local</dd></div>

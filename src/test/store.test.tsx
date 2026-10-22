@@ -6,6 +6,7 @@ import type { StoreValue } from '../store/store'
 import { StoreProvider, useStore } from '../store/store'
 import { createPasswordRecord, verifyPassword } from '../lib/auth'
 import { DATA_KEY, readStoredData } from '../lib/storage'
+import { weekRange } from '../lib/review'
 import {
   adminUser,
   makeSession,
@@ -391,5 +392,78 @@ describe('memory and preferences', () => {
       result.current.rememberTask('t-mine')
     })
     expect(result.current.data).toBe(before)
+  })
+})
+
+describe('weekly cadence', () => {
+  beforeEach(() => {
+    localStorage.clear()
+    sessionStorage.clear()
+  })
+
+  it('closes one review per week and updates it in place', async () => {
+    const { result } = await useEmployeeStore()
+    const range = weekRange(new Date(), 1)
+    let reviewId = ''
+
+    act(() => {
+      const review = result.current.saveWeeklyReview({
+        weekStart: range.start,
+        weekEnd: range.end,
+        intention: '  Make room for the launch review.  ',
+        priorityIds: ['t-mine', 't-design'],
+      })
+      reviewId = review.id
+      expect(review.intention).toBe('Make room for the launch review.')
+      expect(review.priorityIds).toEqual(['t-mine', 't-design'])
+    })
+
+    expect(result.current.data.reviews).toHaveLength(1)
+    expect(result.current.data.reviews[0].userId).toBe('u-employee')
+
+    act(() => {
+      result.current.saveWeeklyReview({
+        weekStart: range.start,
+        weekEnd: range.end,
+        intention: 'Fewer open loops.',
+        priorityIds: ['t-mine'],
+      })
+    })
+
+    expect(result.current.data.reviews).toHaveLength(1)
+    expect(result.current.data.reviews[0].id).toBe(reviewId)
+    expect(result.current.data.reviews[0].intention).toBe('Fewer open loops.')
+
+    await waitFor(() => {
+      const stored = readStoredData()
+      expect(stored?.reviews).toHaveLength(1)
+      expect(stored?.reviews[0].intention).toBe('Fewer open loops.')
+    })
+  })
+
+  it('keeps priorities inside the reviewer’s scope and lets viewers close a personal review', async () => {
+    const employee = await useEmployeeStore()
+    const range = weekRange(new Date(), 1)
+
+    expect(() =>
+      employee.result.current.saveWeeklyReview({
+        weekStart: range.start,
+        weekEnd: range.end,
+        priorityIds: ['t-other'],
+      }),
+    ).toThrow(/no longer in view/i)
+
+    const viewer = await renderStore('u-viewer')
+    act(() => {
+      viewer.result.current.saveWeeklyReview({
+        weekStart: range.start,
+        weekEnd: range.end,
+        intention: 'A quiet week of observing.',
+        priorityIds: [],
+      })
+    })
+
+    expect(viewer.result.current.data.reviews[0].userId).toBe('u-viewer')
+    expect(viewer.result.current.data.tasks).toHaveLength(4)
   })
 })

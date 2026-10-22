@@ -6,6 +6,7 @@ import {
   CheckSquare2,
   Clock3,
   Columns3,
+  Feather,
   FolderKanban,
   Plus,
   Search,
@@ -143,6 +144,20 @@ export function CommandPalette() {
           },
         })
       }
+      if (/weekly|cadence|review|ritual|intention/.test(needle)) {
+        actionItems.push({
+          id: 'go-review-matched',
+          type: 'action',
+          title: 'Open the Weekly Cadence',
+          subtitle: 'Close the week with intention',
+          icon: <Feather size={16} />,
+          run: () => {
+            rememberSearch(query)
+            closePalette()
+            navigate('/review')
+          },
+        })
+      }
     } else {
       if (canCreateTask(user)) {
         actionItems.push({
@@ -155,6 +170,17 @@ export function CommandPalette() {
         })
       }
       actionItems.push(
+        {
+          id: 'go-review',
+          type: 'action',
+          title: 'Open the Weekly Cadence',
+          subtitle: 'Close the week with intention',
+          icon: <Feather size={16} />,
+          run: () => {
+            closePalette()
+            navigate('/review')
+          },
+        },
         {
           id: 'go-board',
           type: 'action',

@@ -8,7 +8,7 @@
 
 No backend. No cloud account. No telemetry. The whole workspace lives in your browser and never leaves the device.
 
-[**Download for Windows**](https://github.com/theusercontent/cadence/releases/download/v1.3.0/Cadence-Offline-v1.3.0-Windows.zip) ·
+[**Download for Windows**](https://github.com/theusercontent/cadence/releases/download/v1.4.0/Cadence-Offline-v1.4.0-Windows.zip) ·
 [Run locally](#quick-start) ·
 [Take the tour](#a-quick-tour)
 
@@ -24,6 +24,7 @@ Most task managers begin with an account and a server. Cadence begins with the w
 
 - **Offline by construction** — no API, no database, no analytics. A generated service worker caches the app shell, so a reload without a connection still opens your workspace.
 - **Step progress you can see** — break a task into steps and completion fills the bar on task rows, board cards, calendar day panels, and the task sheet.
+- **A weekly ritual** — the Weekly Cadence looks back at what moved, notices overdue, quiet, or unowned work, chooses up to three priorities for next week, and saves a private intention to Memory.
 - **Owners beyond the roster** — assign work to a teammate or type any external name. Linked teammates keep their permissions; external owners stay visible in lists, search, and reports.
 - **Roles with real boundaries** — admin, manager, employee, and viewer permissions are enforced in the UI and in the store, not just hidden with CSS.
 - **Memory that helps** — restores your session, last route, last task, recent searches, sign-in history, theme, and workspace activity.
@@ -36,22 +37,28 @@ Every task can carry a small checklist. Cadence turns that checklist into readab
 
 ![Task steps with a 2 of 3 progress bar](docs/screenshots/task-steps.jpg)
 
+## The Weekly Cadence
+
+Close the week in four quiet movements: look back at what moved, notice work that is overdue, quiet, or unowned, choose up to three priorities for the next week, and save an intention to Memory. The ritual follows the same role boundaries as the rest of Cadence — employees review their own work, managers their scoped work, and admins the workspace — and keeps one Cadence per person per week. It works entirely on the device, with no new account or service.
+
+![The Weekly Cadence in the light theme](docs/screenshots/weekly-cadence.jpg)
+
 ## Owners beyond the roster
 
 The assignee field is a name, not a locked dropdown. Start typing to pick an active teammate, or enter any other name for a contractor, vendor, or stakeholder. Matching teammates stay linked and keep their normal permissions and “assigned to me” counts. External owners are labels on the task: they appear in task rows, board cards, the calendar, search, and the CSV report, but they do not receive a Cadence login or workspace access.
 
 ![Task composer with an external assignee name](docs/screenshots/assignee.jpg)
 
-## Reports and backups
+## Reports, backups, and personal data
 
-Open **Settings → Local data** for two local-only exports:
+Open **Memory → Export my data** for a personal JSON copy of the work you can see, your settings, local recall, and saved Weekly Cadences. Open **Settings → Local data** for two more local-only exports:
 
 - **Task report (CSV)** — a spreadsheet-ready summary of every task you can see, including project, status, priority, owner (linked teammate or external name), due date, labels, and step progress. It follows the same role boundaries as the rest of Cadence.
 - **Full workspace backup (JSON)** — an admin-only snapshot of the complete workspace for restore or migration.
 
 ![Settings Local data with a CSV task report and JSON workspace backup](docs/screenshots/reports.jpg)
 
-Both files download through the browser. Nothing is uploaded, and the report includes no credentials.
+All files download through the browser. Nothing is uploaded, and the report includes no credentials.
 
 ## A quick tour
 
@@ -71,17 +78,17 @@ Both files download through the browser. Nothing is uploaded, and the report inc
 
 The release ZIP is self-contained: it bundles a portable Node.js runtime, the prebuilt app, `run.bat`, and a license. There is no installer, no account, no administrator access, and no internet connection required.
 
-**New in v1.3.0:** Task creation and the task sheet now accept a free-text assignee name. Exact teammate matches stay linked; any other name becomes a visible external owner in task rows, board cards, calendar, search, and the CSV report.
+**New in v1.4.0:** The Weekly Cadence turns the end of the week into a quiet four-part ritual. Look back at finished work, notice what is overdue or stuck, choose up to three priorities for next week, and save an intention to Memory. It is role-scoped, private to each teammate, and entirely local.
 
-1. [Download `Cadence-Offline-v1.3.0-Windows.zip`](https://github.com/theusercontent/cadence/releases/download/v1.3.0/Cadence-Offline-v1.3.0-Windows.zip) (30.5 MB).
+1. [Download `Cadence-Offline-v1.4.0-Windows.zip`](https://github.com/theusercontent/cadence/releases/download/v1.4.0/Cadence-Offline-v1.4.0-Windows.zip) (30.5 MB).
 2. Extract the folder anywhere.
 3. Double-click `run.bat` and open the local URL it prints.
 
 ```text
-SHA-256  df420a6b9231cbc3b2ba41992b013b0ace22da48a0841496b1fd17d52950df58
+SHA-256  ea9b13acaeb3870ee2aebf9bccf9c93b3fa169a0404e121786c72de4b2e68f4f
 ```
 
-The checksum is also attached to the [v1.3.0 release](https://github.com/theusercontent/cadence/releases/tag/v1.3.0) and archived on the [`release/v1.3.0` branch](https://github.com/theusercontent/cadence/tree/release/v1.3.0/releases). Versioned ZIPs live on `release/*` branches so `main` stays source-only; release branches are never merged.
+The checksum is also attached to the [v1.4.0 release](https://github.com/theusercontent/cadence/releases/tag/v1.4.0) and archived on the [`release/v1.4.0` branch](https://github.com/theusercontent/cadence/tree/release/v1.4.0/releases). Versioned ZIPs live on `release/*` branches so `main` stays source-only; release branches are never merged.
 
 ## Demo accounts
 
@@ -122,12 +129,12 @@ npm start
 ### Verification
 
 ```bash
-npm test          # 35 unit tests
+npm test          # 50 unit tests
 npm run build     # type-check, bundle, and generate the service worker
 node scripts/qa-smoke.mjs   # browser QA against a production server
 ```
 
-The browser suite walks through sign-in and session restore, offline reload, task creation, step progress, search, command palette memory, board drag and drop, calendar navigation, projects, invitations, backup and CSV report validation, reset, every role boundary, and mobile layouts. Test artifacts land in `%TEMP%\opencode\cadence-qa`.
+The browser suite walks through sign-in and session restore, offline reload, task creation, step progress, search, command palette memory, the Weekly Cadence, personal export, board drag and drop, calendar navigation, projects, invitations, backup and CSV report validation, reset, every role boundary, and mobile layouts. Test artifacts land in `%TEMP%\opencode\cadence-qa`.
 
 ### Deployment
 

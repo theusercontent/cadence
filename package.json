@@ -1,7 +1,7 @@
 {
   "name": "cadence",
   "private": true,
-  "version": "1.3.0",
+  "version": "1.4.0",
   "type": "module",
   "description": "Cadence — an offline-first task manager for focused teams.",
   "license": "Apache-2.0",

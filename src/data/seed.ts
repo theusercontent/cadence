@@ -5,10 +5,11 @@ import type {
   Task,
   User,
   UserSettings,
+  WeeklyReview,
   WorkspaceData,
 } from '../types'
 import { createPasswordRecord } from '../lib/auth'
-import { addDays, dateOffsetISO, todayISO } from '../lib/dates'
+import { addDays, addDaysToDate, dateOffsetISO, startOfWeek, todayISO, toISODate } from '../lib/dates'
 
 export const DEPARTMENTS = [
   'Leadership',
@@ -861,6 +862,22 @@ export async function buildSeedData(): Promise<WorkspaceData> {
     ]),
   )
 
+  const previousWeekStart = toISODate(addDaysToDate(startOfWeek(new Date(), 0), -7))
+  const reviews: WeeklyReview[] = [
+    {
+      id: 'wr-seed-1',
+      userId: 'u-ava',
+      weekStart: previousWeekStart,
+      weekEnd: addDays(previousWeekStart, 6),
+      reviewedAt: daysAgo(6),
+      intention: 'Protect Friday for the operating narrative and make the launch review feel calm.',
+      priorityIds: ['t-007', 't-008'],
+      completedCount: 4,
+      projectCount: 3,
+      openCount: 18,
+    },
+  ]
+
   const memory = Object.fromEntries(
     users.map((user) => {
       const presets: Record<string, { route: string; task: string | null; searches: string[]; logins: number }> = {
@@ -895,6 +912,7 @@ export async function buildSeedData(): Promise<WorkspaceData> {
     activities,
     settings,
     memory,
+    reviews,
   }
 }
 

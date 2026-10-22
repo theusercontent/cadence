@@ -5,6 +5,7 @@ import {
   CheckSquare2,
   Clock3,
   Download,
+  Feather,
   FolderKanban,
   HardDrive,
   KeyRound,
@@ -21,6 +22,7 @@ import { PageHeader } from '../components/TaskRow'
 import { Avatar, EmptyState, UserAvatar } from '../components/ui'
 import { visibleActivities } from '../lib/permissions'
 import { formatDateTime, formatLongDate, formatRelativeTime, toISODate, todayISO, dateOffsetISO } from '../lib/dates'
+import { reviewForWeek, reviewHistory, weekRange, weekRangeForReview } from '../lib/review'
 import { storageFootprint } from '../lib/storage'
 import { cx, pluralize } from '../lib/utils'
 import type { Activity } from '../types'
@@ -35,6 +37,7 @@ const ROUTE_LABELS: Record<string, string> = {
   '/projects': 'Projects',
   '/team': 'Team',
   '/memory': 'Memory',
+  '/review': 'Weekly Cadence',
   '/settings': 'Settings',
 }
 
@@ -64,13 +67,20 @@ function dateBucket(activity: Activity): string {
 }
 
 export function MemoryPage() {
-  const { data, currentUser, navigate, clearRecentSearches, exportPersonal, notify } = useStore()
+  const { data, currentUser, settings, navigate, clearRecentSearches, exportPersonal, notify } = useStore()
   const { openTask, openPalette } = useAppUI()
   const user = currentUser!
   const [filter, setFilter] = useState<MemoryFilter>('all')
   const [search, setSearch] = useState('')
 
   const memory = data.memory[user.id]
+  const currentWeek = useMemo(
+    () => weekRange(new Date(), settings.weekStartsOn),
+    [settings.weekStartsOn],
+  )
+  const currentReview = reviewForWeek(data.reviews, user.id, currentWeek.start)
+  const latestReview = reviewHistory(data.reviews, user.id)[0]
+  const cadenceReview = currentReview ?? latestReview
   const lastTask = memory?.lastTaskId ? data.tasks.find((task) => task.id === memory.lastTaskId) : null
   const footprint = storageFootprint(data)
   const userMap = useMemo(() => new Map(data.users.map((person) => [person.id, person])), [data.users])
@@ -321,6 +331,36 @@ export function MemoryPage() {
                 <p className="muted">Searches you choose from the command palette appear here.</p>
               )}
             </div>
+          </section>
+
+          <section className="card memory-cadence-card">
+            <div className="card-head">
+              <div>
+                <span className="card-eyebrow">{currentReview ? 'Weekly Cadence' : latestReview ? 'Last Cadence' : 'Weekly Cadence'}</span>
+                <h2>{currentReview ? 'This week is held.' : latestReview ? 'A week you closed.' : 'A ritual for the week.'}</h2>
+              </div>
+              <Feather size={17} />
+            </div>
+            {cadenceReview ? (
+              <>
+                <blockquote>
+                  {cadenceReview.intention
+                    ? `“${cadenceReview.intention}”`
+                    : '“No intention written. The week is still closed.”'}
+                </blockquote>
+                <p className="memory-cadence-meta">
+                  {weekRangeForReview(cadenceReview).label} · {cadenceReview.completedCount} finished
+                  {currentReview ? '' : ' · last closed week'}
+                </p>
+              </>
+            ) : (
+              <p className="memory-cadence-soft">
+                Five quiet minutes to look back, notice what stalled, and choose next week’s rhythm.
+              </p>
+            )}
+            <button className="button button-secondary button-compact full-width" onClick={() => navigate('/review')}>
+              {currentReview ? 'Revisit the Cadence' : 'Open Weekly Cadence'} <ArrowRight size={14} />
+            </button>
           </section>
 
           <section className="card memory-storage-card">

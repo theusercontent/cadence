@@ -93,6 +93,26 @@ export interface UserSettings {
   reduceMotion: boolean
 }
 
+export interface WeeklyReview {
+  id: string
+  userId: string
+  weekStart: string
+  weekEnd: string
+  reviewedAt: string
+  intention: string
+  priorityIds: string[]
+  completedCount: number
+  projectCount: number
+  openCount: number
+}
+
+export interface WeeklyReviewInput {
+  weekStart: string
+  weekEnd: string
+  intention?: string
+  priorityIds: string[]
+}
+
 export interface WorkspaceData {
   version: number
   createdAt: string
@@ -102,6 +122,7 @@ export interface WorkspaceData {
   activities: Activity[]
   settings: Record<string, UserSettings>
   memory: Record<string, UserMemory>
+  reviews: WeeklyReview[]
 }
 
 export interface Session {

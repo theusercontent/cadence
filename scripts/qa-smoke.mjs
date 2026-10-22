@@ -9,6 +9,7 @@ const DOWNLOADS = path.join(ARTIFACTS, 'downloads')
 const PROFILE = 'C:\\Users\\akaka\\AppData\\Local\\Temp\\opencode\\cadence-qa-profile'
 const QA_TASK = 'QA · Admin smoke task'
 const OFFLINE_TASK = 'QA · Offline task'
+const WEEKLY_INTENTION = 'Protect Friday for a calm launch review.'
 
 mkdirSync(ARTIFACTS, { recursive: true })
 rmSync(PROFILE, { recursive: true, force: true })
@@ -427,6 +428,99 @@ async function main() {
     note('Offline task and session survived reconnect')
   })
 
+  await runStep('Weekly Cadence ritual, history, and personal export', async () => {
+    await page.click('[aria-label="Search workspace"]')
+    await page.waitForSelector('.palette')
+    await page.type('[aria-label="Search"]', 'weekly')
+    await page.waitForSelector('.palette-item', { timeout: 10000 })
+    let openedReview = false
+    for (const item of await page.$$('.palette-item')) {
+      const title = await item.$eval('strong', (node) => node.textContent.trim())
+      if (title === 'Open the Weekly Cadence') {
+        await item.click()
+        openedReview = true
+        break
+      }
+    }
+    assert(openedReview, 'Weekly Cadence action missing from the command palette')
+    await waitHeading('Weekly Cadence')
+    await page.waitForSelector('.weekly-hero')
+    assert((await textOf('.weekly-status-pill')).includes('Week open'), 'Current week should start open')
+    assert((await count('.weekly-choice')) >= 3, 'Weekly Cadence did not list open priorities')
+    assert(await page.$('.weekly-history'), 'Seeded prior Cadence is missing from history')
+
+    const choices = await page.$$('.weekly-choice')
+    await choices[0].click()
+    await choices[1].click()
+    assert((await count('.weekly-picked-chip')) === 2, 'Priority selection did not add two picks')
+    await page.type('#weekly-intention', WEEKLY_INTENTION)
+    await screenshot('05-weekly-cadence.png')
+    await page.click('.weekly-close-button')
+    await page.waitForFunction(
+      () => document.querySelector('.weekly-status-pill')?.textContent.includes('Week closed'),
+      { timeout: 10000 },
+    )
+    const review = (await readWorkspace()).reviews.find(
+      (item) => item.userId === 'u-ava' && item.intention === WEEKLY_INTENTION,
+    )
+    assert(review, 'Weekly Cadence was not written to local storage')
+    assert(review.priorityIds.length === 2, 'Weekly Cadence priorities were not saved')
+    note('Closed the current week with two priorities and a written intention')
+
+    await page.reload({ waitUntil: 'networkidle0' })
+    await page.waitForSelector('.sidebar', { timeout: 30000 })
+    await waitPage('Weekly Cadence')
+    assert((await textOf('.weekly-status-pill')).includes('Week closed'), 'Weekly Cadence did not survive reload')
+    assert(
+      (await textOf('.weekly-intention-card blockquote')).includes(WEEKLY_INTENTION),
+      'Saved intention did not survive reload',
+    )
+    await page.waitForFunction(() => document.querySelectorAll('.weekly-picked-chip').length === 2, {
+      timeout: 10000,
+    })
+    note('Weekly Cadence, priorities, and intention survived a full reload')
+
+    await nav('Overview')
+    assert(!(await page.$('.weekly-invite')), 'Overview invited an already reviewed week')
+    await nav('Memory')
+    await waitForText('.memory-cadence-card', 'This week is held.')
+    assert(
+      await page.evaluate(
+        (intention) => document.querySelector('.memory-cadence-card')?.textContent.includes(intention),
+        WEEKLY_INTENTION,
+      ),
+      'Memory did not surface the saved intention',
+    )
+    await screenshot('05b-memory-cadence.png')
+
+    const client = await browser.target().createCDPSession()
+    await client.send('Browser.setDownloadBehavior', {
+      behavior: 'allow',
+      downloadPath: DOWNLOADS,
+      eventsEnabled: true,
+    })
+    rmSync(DOWNLOADS, { recursive: true, force: true })
+    mkdirSync(DOWNLOADS, { recursive: true })
+    await clickText('.page-header-actions .button', 'Export my data')
+    const exportDeadline = Date.now() + 15000
+    let personalFile = ''
+    while (Date.now() < exportDeadline) {
+      const candidate = readdirSync(DOWNLOADS).find((file) => file.endsWith('.json'))
+      if (candidate) {
+        personalFile = candidate
+        break
+      }
+      await new Promise((resolve) => setTimeout(resolve, 250))
+    }
+    assert(personalFile, 'Personal data export was not downloaded')
+    const personal = JSON.parse(readFileSync(path.join(DOWNLOADS, personalFile), 'utf8'))
+    assert(
+      personal.reviews?.some((item) => item.intention === WEEKLY_INTENTION),
+      'Personal data export is missing the Weekly Cadence',
+    )
+    note(`Personal data export includes the Cadence (${personalFile})`)
+  })
+
   await runStep('Board drag and drop', async () => {
     await nav('Board')
     await page.waitForSelector('.kanban-column')
@@ -569,6 +663,10 @@ async function main() {
       backup.data.tasks.some((task) => task.title === QA_TASK),
       'Backup does not contain the workspace changes',
     )
+    assert(
+      backup.data.reviews?.some((review) => review.intention === WEEKLY_INTENTION),
+      'Backup does not contain the Weekly Cadence',
+    )
     note(`Workspace backup downloaded and validated (${downloaded})`)
 
     await clickText('.export-option', 'Task report')
@@ -622,6 +720,12 @@ async function main() {
     await nav('Team')
     assert(!(await page.$('.page-header-actions .button-primary')), 'Manager must not add people')
     assert((await count('.person-foot .button')) === 0, 'Manager must not manage people')
+    await nav('Weekly Cadence')
+    assert(await page.$('.weekly-choice'), 'Manager could not open the Weekly Cadence')
+    assert(
+      (await page.$$eval('.weekly-choice', (nodes) => nodes.length)) > 2,
+      'Manager Weekly Cadence has no scoped priorities',
+    )
     await nav('Settings')
     assert(!(await page.evaluate(() => document.body.textContent.includes('Full workspace backup'))), 'Manager saw admin backup')
     assert(!(await page.evaluate(() => document.body.textContent.includes('Reset demo workspace'))), 'Manager saw workspace reset')
@@ -633,6 +737,19 @@ async function main() {
 
   await runStep('Employee role boundaries', async () => {
     await login('maya@cadence.app', 'maya1234')
+    await nav('Weekly Cadence')
+    const employeeReview = await page.evaluate(
+      () => document.querySelector('.weekly-choose')?.textContent ?? '',
+    )
+    assert(
+      employeeReview.includes('Synthesize usability findings'),
+      'Employee Weekly Cadence did not include their own work',
+    )
+    assert(
+      !employeeReview.includes('Review mobile test matrix'),
+      'Employee Weekly Cadence included another owner’s work',
+    )
+    note('Employee Weekly Cadence is limited to their own lane')
     await nav('Tasks')
     assert(await page.$('.topbar-new'), 'Employee should be able to create tasks')
     await nav('Projects')
@@ -726,6 +843,37 @@ async function main() {
     note('Sidebar is off-canvas, opens, and closes correctly on mobile')
     await page.setViewport({ width: 1440, height: 960, deviceScaleFactor: 1 })
     await page.reload({ waitUntil: 'networkidle0' })
+  })
+
+  await runStep('Mobile Weekly Cadence', async () => {
+    await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2 })
+    await page.evaluate(() => {
+      window.location.hash = '/review'
+    })
+    await page.waitForSelector('.weekly-hero', { timeout: 10000 })
+    await page.evaluate(() => window.scrollTo(0, 0))
+    const mobileReview = await page.evaluate(() => ({
+      viewport: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+      heroWidth: document.querySelector('.weekly-hero')?.getBoundingClientRect().width ?? 0,
+      closeButton: Boolean(document.querySelector('.weekly-close-button')),
+      choices: document.querySelectorAll('.weekly-choice').length,
+    }))
+    assert(mobileReview.closeButton, 'Mobile Weekly Cadence is missing its close action')
+    assert(mobileReview.choices > 0, 'Mobile Weekly Cadence has no priorities')
+    assert(
+      mobileReview.scrollWidth <= mobileReview.viewport,
+      'Weekly Cadence overflowed the mobile viewport',
+    )
+    assert(
+      mobileReview.heroWidth <= mobileReview.viewport,
+      'Weekly Cadence hero is wider than the mobile viewport',
+    )
+    await screenshot('12-mobile-weekly-cadence.png')
+    note('Weekly Cadence fits a 390 px viewport with its priorities and close action')
+    await page.setViewport({ width: 1440, height: 960, deviceScaleFactor: 1 })
+    await page.reload({ waitUntil: 'networkidle0' })
+    await page.waitForSelector('.sidebar', { timeout: 30000 })
   })
 
   await runStep('Clean session restore', async () => {

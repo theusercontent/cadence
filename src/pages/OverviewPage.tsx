@@ -6,6 +6,7 @@ import {
   CheckCircle2,
   Clock3,
   Coffee,
+  Feather,
   ListTodo,
   Plus,
   Sparkles,
@@ -41,13 +42,19 @@ import {
   dateOffsetISO,
   fromISODate,
 } from '../lib/dates'
+import { reviewForWeek, weekRange } from '../lib/review'
 import { cx, pct } from '../lib/utils'
 import type { Activity, Project } from '../types'
 
 export function OverviewPage() {
-  const { data, currentUser, navigate, toggleTask, notify } = useStore()
+  const { data, currentUser, settings, navigate, toggleTask, notify } = useStore()
   const { openTask, openComposer } = useAppUI()
   const user = currentUser!
+  const currentWeek = useMemo(
+    () => weekRange(new Date(), settings.weekStartsOn),
+    [settings.weekStartsOn],
+  )
+  const weeklyReviewed = Boolean(reviewForWeek(data.reviews, user.id, currentWeek.start))
 
   const analysis = useMemo(() => {
     const tasks = visibleTasks(user, data)
@@ -185,6 +192,18 @@ export function OverviewPage() {
           </div>
         </article>
       </section>
+
+      {!weeklyReviewed && (
+        <button className="weekly-invite" onClick={() => navigate('/review')}>
+          <span className="weekly-invite-mark" aria-hidden="true"><Feather size={19} /></span>
+          <span className="weekly-invite-copy">
+            <span className="card-eyebrow">The weekly ritual</span>
+            <strong>Close the week. Set the rhythm.</strong>
+            <small>Look back, notice what’s stuck, and choose what comes next.</small>
+          </span>
+          <span className="weekly-invite-cta">Open Weekly Cadence <ArrowRight size={14} /></span>
+        </button>
+      )}
 
       <div className="dashboard-grid">
         <section className="card focus-card">
