@@ -1,0 +1,55 @@
+timestamp=2026-10-21T22:18:55.757Z level=INFO run=b3932782 message="cli starting" version=2.1.2 channel=latest local=false args="[\"--version\"]" role=cli
+timestamp=2026-10-21T22:19:10.304Z level=INFO run=75b0f1a3 message="cli starting" version=2.1.2 channel=latest local=false args=[] role=cli
+timestamp=2026-10-21T22:19:10.357Z level=INFO run=75b0f1a3 message="background service starting" reason=missing previousVersion=undefined role=cli
+timestamp=2026-10-21T22:19:11.276Z level=INFO run=75b0f1a3 message="event stream connecting" component=client attempt=0 role=cli
+timestamp=2026-10-21T22:19:10.755Z level=INFO run=59ff0623 message="cli starting" version=2.1.2 channel=latest local=false args="[\"serve\",\"--service\"]" role=cli
+timestamp=2026-10-21T22:19:10.937Z level=INFO run=59ff0623 message="database schema bootstrap started" migrations=50 role=server
+timestamp=2026-10-21T22:19:10.948Z level=INFO run=59ff0623 message="database schema bootstrap completed" migrations=50 durationMs=11 role=server
+timestamp=2026-10-21T22:19:11.058Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\Users\\2000159428\\.config\\opencode" type=directory ignores=6 http.span=28 role=server
+timestamp=2026-10-21T22:19:11.137Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\Users\\2000159428\\.opencode" type=directory ignores=6 http.span=107 role=server
+timestamp=2026-10-21T22:19:11.137Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\ProgramData" type=entries ignores=0 http.span=107 role=server
+timestamp=2026-10-21T22:19:11.138Z level=INFO run=59ff0623 message="watcher started" path="C:\\ProgramData" type=entries backend=node ignores=0 http.span=108 role=server
+timestamp=2026-10-21T22:19:11.139Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\" type=entries ignores=0 http.span=109 role=server
+timestamp=2026-10-21T22:19:11.139Z level=INFO run=59ff0623 message="watcher started" path="C:\\" type=entries backend=node ignores=0 http.span=109 role=server
+timestamp=2026-10-21T22:19:11.139Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\Users" type=entries ignores=0 http.span=109 role=server
+timestamp=2026-10-21T22:19:11.140Z level=INFO run=59ff0623 message="watcher started" path="C:\\Users" type=entries backend=node ignores=0 http.span=110 role=server
+timestamp=2026-10-21T22:19:11.140Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\Users\\2000159428" type=entries ignores=0 http.span=110 role=server
+timestamp=2026-10-21T22:19:11.140Z level=INFO run=59ff0623 message="watcher started" path="C:\\Users\\2000159428" type=entries backend=node ignores=0 http.span=110 role=server
+timestamp=2026-10-21T22:19:11.149Z level=INFO run=59ff0623 message="watcher started" path="C:\\Users\\2000159428\\.config\\opencode" type=directory backend=windows ignores=6 http.span=119 role=server
+timestamp=2026-10-21T22:19:11.149Z level=INFO run=59ff0623 message="watcher started" path="C:\\Users\\2000159428\\.opencode" type=directory backend=windows ignores=6 http.span=119 role=server
+timestamp=2026-10-21T22:19:11.158Z level=INFO run=59ff0623 message="location services booted" directory="C:\\Users\\2000159428" workspaceID=undefined durationMs=127 http.span=128 role=server
+timestamp=2026-10-21T22:19:11.459Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\Users\\2000159428\\.config\\opencode\\AGENTS.md" type=file ignores=0
+timestamp=2026-10-21T22:19:11.460Z level=INFO run=59ff0623 message="watcher started" path="C:\\Users\\2000159428\\.config\\opencode\\AGENTS.md" type=file backend=node ignores=0 http.span=430 role=server
+timestamp=2026-10-21T22:19:11.461Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\Users\\2000159428\\AGENTS.md" type=file ignores=0
+timestamp=2026-10-21T22:19:11.461Z level=INFO run=59ff0623 message="watcher started" path="C:\\Users\\2000159428\\AGENTS.md" type=file backend=node ignores=0 http.span=431 role=server
+timestamp=2026-10-21T22:19:11.497Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\Users\\2000159428\\.agents\\skills" type=directory ignores=8
+timestamp=2026-10-21T22:19:11.499Z level=INFO run=59ff0623 message="watcher started" path="C:\\Users\\2000159428\\.agents\\skills" type=directory backend=windows ignores=8 http.span=469 role=server
+timestamp=2026-10-21T22:19:11.510Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\Users\\2000159428\\.config\\opencode\\skill" type=file ignores=0
+timestamp=2026-10-21T22:19:11.511Z level=INFO run=59ff0623 message="watcher started" path="C:\\Users\\2000159428\\.config\\opencode\\skill" type=file backend=node ignores=0 http.span=481 role=server
+timestamp=2026-10-21T22:19:11.512Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\Users\\2000159428\\.config\\opencode\\skills" type=file ignores=0
+timestamp=2026-10-21T22:19:11.513Z level=INFO run=59ff0623 message="watcher started" path="C:\\Users\\2000159428\\.config\\opencode\\skills" type=file backend=node ignores=0 http.span=483 role=server
+timestamp=2026-10-21T22:19:11.514Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\Users\\2000159428\\.opencode\\skill" type=file ignores=0
+timestamp=2026-10-21T22:19:11.515Z level=INFO run=59ff0623 message="watcher started" path="C:\\Users\\2000159428\\.opencode\\skill" type=file backend=node ignores=0 http.span=485 role=server
+timestamp=2026-10-21T22:19:11.516Z level=INFO run=59ff0623 message="watcher subscribe" path="C:\\Users\\2000159428\\.opencode\\skills" type=file ignores=0
+timestamp=2026-10-21T22:19:11.516Z level=INFO run=59ff0623 message="watcher started" path="C:\\Users\\2000159428\\.opencode\\skills" type=file backend=node ignores=0 http.span=486 role=server
+timestamp=2026-10-21T22:19:11.530Z level=INFO run=59ff0623 message=event event.id=evt_1608c052a001tw6BITRONJTO31 event.created=1792621151530 event.type=provider.updated event.location.directory="C:\\Users\\2000159428" event.location.workspaceID=undefined event.data={} http.span=500 role=server
+timestamp=2026-10-21T22:19:11.541Z level=INFO run=59ff0623 message=event event.id=evt_1608c0535001r83mwlM9hgTcyp event.created=1792621151541 event.type=model.updated event.location.directory="C:\\Users\\2000159428" event.location.workspaceID=undefined event.data={} http.span=511 role=server
+timestamp=2026-10-21T22:19:11.542Z level=INFO run=59ff0623 message=event event.id=evt_1608c0536001k2m5gy27e9e0aT event.created=1792621151542 event.type=agent.updated event.location.directory="C:\\Users\\2000159428" event.location.workspaceID=undefined event.data={} http.span=512 role=server
+timestamp=2026-10-21T22:19:11.543Z level=INFO run=59ff0623 message=event event.id=evt_1608c05370013B4oasZR04JVRj event.created=1792621151543 event.type=command.updated event.location.directory="C:\\Users\\2000159428" event.location.workspaceID=undefined event.data={} http.span=513 role=server
+timestamp=2026-10-21T22:19:11.316Z level=INFO run=75b0f1a3 message="plugin reconciliation started" component=plugin id=1 role=cli
+timestamp=2026-10-21T22:19:11.328Z level=INFO run=75b0f1a3 message="plugin reconciliation completed" component=plugin id=1 durationMs=12 plugins=13 role=cli
+timestamp=2026-10-21T22:19:11.384Z level=INFO run=75b0f1a3 message="event stream connected" component=client role=cli
+timestamp=2026-10-21T22:19:11.385Z level=INFO run=75b0f1a3 message="plugin reconciliation started" component=plugin id=2 role=cli
+timestamp=2026-10-21T22:19:11.387Z level=INFO run=75b0f1a3 message="plugin reconciliation completed" component=plugin id=2 durationMs=2 plugins=13 role=cli
+timestamp=2026-10-21T22:19:11.460Z level=INFO run=75b0f1a3 message="plugin reconciliation started" component=plugin id=3 role=cli
+timestamp=2026-10-21T22:19:11.462Z level=INFO run=75b0f1a3 message="plugin reconciliation completed" component=plugin id=3 durationMs=2 plugins=13 role=cli
+timestamp=2026-10-21T22:19:11.463Z level=INFO run=75b0f1a3 message="plugin reconciliation started" component=plugin id=4 role=cli
+timestamp=2026-10-21T22:19:11.463Z level=INFO run=75b0f1a3 message="plugin reconciliation completed" component=plugin id=4 durationMs=0 plugins=13 role=cli
+timestamp=2026-10-21T22:19:11.624Z level=INFO run=75b0f1a3 message="plugin reconciliation started" component=plugin id=5 role=cli
+timestamp=2026-10-21T22:19:11.629Z level=INFO run=75b0f1a3 message="plugin reconciliation completed" component=plugin id=5 durationMs=5 plugins=13 role=cli
+timestamp=2026-10-21T22:19:12.011Z level=WARN run=75b0f1a3 message="update check failed" error="UpgradeError: The update service returned HTTP 503." role=cli
+timestamp=2026-10-21T22:19:12.688Z level=ERROR run=59ff0623 message="Failed to fetch models.dev" cause="Cause([Fail(HttpClientError: StatusCode: non 2xx status code (503 GET https://models.opencode.ai/api.json))])" http.span=1658 role=server
+timestamp=2026-10-21T22:20:46.332Z level=ERROR run=59ff0623 message="Failed to drain Session" cause="AI.Error: Provider request failed with HTTP 503\n    at bQ (B:/~BUN/root/chunk-3exb8xqb.js:3:3547)\n    at <anonymous> (B:/~BUN/root/chunk-3exb8xqb.js:3:3240)\n    at SessionStep.attempt (B:/~BUN/root/chunk-1gxpxsz5.js:373:3555)\n    at SessionStep.attempt (definition) (B:/~BUN/root/chunk-1gxpxsz5.js:358:302)\n    at SessionRunner.runStep (B:/~BUN/root/chunk-1gxpxsz5.js:373:2653)\n    at SessionRunner.runStep (definition) (B:/~BUN/root/chunk-1gxpxsz5.js:373:2807)\n    at SessionRunner.drain (B:/~BUN/root/chunk-rex5bcj8.js:18:2552)\n    at SessionRunner.drain (definition) (B:/~BUN/root/chunk-1gxpxsz5.js:373:516)\n    at ServerProcess.start (B:/~BUN/root/chunk-5xxcejxr.js:2:7681)\n    at ServerProcess.start (definition) (B:/~BUN/root/chunk-1gxpxsz5.js:444:25665) {\n  [cause]: AI.Error.ProviderInternal: Provider request failed with HTTP 503\n      at Ff (B:/~BUN/root/chunk-3exb8xqb.js:3:1035)\n      at bQ (B:/~BUN/root/chunk-3exb8xqb.js:3:3558)\n      at <anonymous> (B:/~BUN/root/chunk-3exb8xqb.js:3:3240)\n}" role=server sessionID=ses_e9f73e76cffecqNhD2dwQGjiNJ
+timestamp=2026-10-21T22:24:14.115Z level=ERROR run=59ff0623 message="Failed to fetch models.dev" cause="Cause([Fail(HttpClientError: StatusCode: non 2xx status code (503 GET https://models.opencode.ai/api.json))])" http.span=303085 role=server
+timestamp=2026-10-21T22:29:13.062Z level=WARN run=75b0f1a3 message="update check failed" error="UpgradeError: The update service returned HTTP 503." role=cli
+timestamp=2026-10-21T22:29:15.526Z level=ERROR run=59ff0623 message="Failed to fetch models.dev" cause="Cause([Fail(HttpClientError: StatusCode: non 2xx status code (503 GET https://models.opencode.ai/api.json))])" http.span=604496 role=server
